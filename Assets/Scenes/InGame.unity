@@ -839,8 +839,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   _sr: {fileID: 1950673314}
-  _normalSprits: []
+  _normalSprites:
+  - {fileID: 3739671707382384996, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 1899124901501296837, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -8030327207455999943, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -6095725394966119664, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -9147195717028459269, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -4484307726468045045, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   _speed: 2
+  _spriteChangeDistance: 0.15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,12 +12,15 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("‰ñ”ðŽž")] private Sprite[] _dodgeSprites;
 
     [Header("”’lÝ’è")]
-    [SerializeField, Tooltip("·‚µ‘Ö‚¦ŠÔŠu")] private float _frameTime = 0.15f;
+    [SerializeField, Tooltip("’ÊíŽž‚ÌŠÔŠu")] private float _idleFrame = 0.15f;
+    [SerializeField, Tooltip("•àsŽž‚ÌŠÔŠu")] private float _walkFrame = 0.15f;
+    [SerializeField, Tooltip("UŒ‚Žž‚ÌŠÔŠu")] private float _attackFrame = 0.15f;
+    [SerializeField, Tooltip("‰ñ”ðŽž‚ÌŠÔŠu")] private float _dodgeFrame = 0.15f;
 
     private PlayerStateMachine _stateMachine;
 
     private PlayerState _prevState;
-    private float _timer;
+    private float _timer, _frameTime;
     private int _index;
 
     private void Awake()
@@ -28,15 +31,18 @@ public class PlayerSpriteAnimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_stateMachine.CurrentState != _prevState)
+
+        Sprite[] sprites = GetSpritesByState();
+        if(sprites == null || sprites.Length == 0) return;
+
+        if (_stateMachine.CurrentState != _prevState)
         {
             _index = 0;
             _timer = 0;
             _prevState = _stateMachine.CurrentState;
         }
 
-        Sprite[] sprites = GetSpritesByState();
-        if(sprites == null || sprites.Length == 0) return;
+        _frameTime = GetTimeByState();
 
         _timer += Time.deltaTime;
         if(_timer >= _frameTime)
@@ -50,6 +56,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
                 _index++;
                 if (_index >= sprites.Length)
                 {
+                    _index = 0;
                     _stateMachine.ChangeState(PlayerState.Idle);
                     return;
                 }
@@ -69,6 +76,17 @@ public class PlayerSpriteAnimator : MonoBehaviour
             PlayerState.Attack => _attackSprites,
             PlayerState.Dodge => _dodgeSprites,
             _ => null
+        };
+    }
+    private float GetTimeByState()
+    {
+        return _stateMachine.CurrentState switch
+        {
+            PlayerState.Idle => _idleFrame,
+            PlayerState.Walk => _walkFrame,
+            PlayerState.Attack => _attackFrame,
+            PlayerState.Dodge => _dodgeFrame,
+            _ => 0.1f
         };
     }
     /// <summary>

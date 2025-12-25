@@ -665,7 +665,9 @@ GameObject:
   - component: {fileID: 1950673313}
   - component: {fileID: 1950673316}
   - component: {fileID: 1950673315}
+  - component: {fileID: 1950673319}
   - component: {fileID: 1950673317}
+  - component: {fileID: 1950673318}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -838,16 +840,70 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb124b8833cae64dbd44a72f0a4bbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  _speed: 2
+--- !u!114 &1950673318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950673311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b49e88ddce7454ab8e5f3ec2ac0356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+--- !u!114 &1950673319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950673311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8e4c86fc0eb7f448ba85496b29bbfb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpriteAnimator
   _sr: {fileID: 1950673314}
-  _normalSprites:
+  _idleSprites:
   - {fileID: 3739671707382384996, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   - {fileID: 1899124901501296837, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   - {fileID: -8030327207455999943, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   - {fileID: -6095725394966119664, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   - {fileID: -9147195717028459269, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
   - {fileID: -4484307726468045045, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
-  _speed: 2
-  _spriteChangeDistance: 0.15
+  _walkSprites:
+  - {fileID: 3234603487252012666, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -5883674824141739182, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 7823752503265981671, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 8330357267319201523, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 8816224363878762324, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -314106704462117923, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -2717645455129261432, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 435349026708683193, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  _attackSprites:
+  - {fileID: -6548400381511213795, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 9029027728586077436, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 8474797630325523423, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -98796650739412304, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 8349890288753171331, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -2446148668772122827, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -1511133605929549280, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -1786457730625469644, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 1769464633516770964, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -1906005175021236588, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -7324241675961419664, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  _dodgeSprites:
+  - {fileID: 2875040557693435332, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 7350415311274512822, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 4955787995545318181, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 1441664510234283567, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 1402226662825526764, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -651278431475616926, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: -2529400065007318524, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  - {fileID: 7369105813766676681, guid: 9af9f1d88c4d7294cabcd8c1962e9ba3, type: 3}
+  _frameTime: 0.15
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

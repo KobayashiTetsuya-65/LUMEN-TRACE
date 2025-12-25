@@ -1,0 +1,29 @@
+using System.Collections;
+using UnityEngine;
+
+public class PlayerStateMachine : MonoBehaviour
+{
+    public PlayerState CurrentState { get; private set; }
+
+    /// <summary>
+    /// ƒvƒŒƒCƒ„[‚Ìó‘Ô•Ï‰»
+    /// </summary>
+    /// <param name="state"></param>
+    public void ChangeState(PlayerState state)
+    {
+        if(CurrentState == state) return;
+
+        ExitState(CurrentState);
+        CurrentState = state;
+        EnterState(CurrentState);
+    }
+
+    private void EnterState(PlayerState state)
+    {
+        
+    }
+    private void ExitState(PlayerState state)
+    {
+
+    }
+}

@@ -5,7 +5,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("êîílê›íË")]
     [SerializeField, Tooltip("à⁄ìÆë¨ìx")] private float _speed = 2.0f;
+    [SerializeField, Tooltip("ñæÇÈÇ≥îºåa")] private float _lightRadius = 4f;
 
+    private Transform _tr;
     private Rigidbody _rb;
     private PlayerInput _playerInput;
     private InputAction _moveAction,_attackAction;
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        _tr = transform;
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody>();
         _stateMachine = GetComponent<PlayerStateMachine>();
@@ -32,6 +35,10 @@ public class PlayerController : MonoBehaviour
         PlayerInput();
     }
     private void LateUpdate()
+    {
+        
+    }
+    private void FixedUpdate()
     {
         PlayerMove();
     }
@@ -72,5 +79,14 @@ public class PlayerController : MonoBehaviour
         else
             _stateMachine.ChangeState(PlayerState.Idle);
 
+    }
+    void OnTriggerStay(Collider other)
+    {
+        if (Time.frameCount % 3 != 0) return;
+        if (other.TryGetComponent<ILightAffectable>(out var affectable))
+        {
+            float dist = Vector3.Distance(_tr.position, other.transform.position);
+            affectable.SetLightPower(1f - dist / _lightRadius);
+        }
     }
 }

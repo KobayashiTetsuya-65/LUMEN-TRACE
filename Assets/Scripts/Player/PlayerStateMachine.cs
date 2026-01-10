@@ -20,7 +20,18 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void EnterState(PlayerState state)
     {
-        
+        switch (state)
+        {
+            case PlayerState.Attack:
+                //UŒ‚”»’èì‚é
+
+                break;
+            case PlayerState.Dodge:
+                //–³“G”»’è‚Â‚­‚é
+
+
+                break;
+        }
     }
     private void ExitState(PlayerState state)
     {

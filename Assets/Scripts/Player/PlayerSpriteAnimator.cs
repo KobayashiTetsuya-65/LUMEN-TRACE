@@ -17,6 +17,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("UŒ‚‚ÌŠÔŠu")] private float _attackFrame = 0.15f;
     [SerializeField, Tooltip("‰ñ”ğ‚ÌŠÔŠu")] private float _dodgeFrame = 0.15f;
 
+    public bool _isRightFacing { get; private set; } = true;
+
     private PlayerStateMachine _stateMachine;
 
     private PlayerState _prevState;
@@ -99,5 +101,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
             _sr.flipX = false;
         else if(input < -0.01f)
             _sr.flipX = true;
+
+        _isRightFacing = !_sr.flipX;
     }
 }

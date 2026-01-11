@@ -55,6 +55,11 @@ public class PlayerController : LightSourceBase
         if (_stateMachine.CurrentState == PlayerState.Dodge)
         {
             Vector3 dodge = new Vector3(_distanceTraveled, 0, 0);
+            if (!_spriteAnimator._isRightFacing)
+            {
+                dodge = new Vector3(-_distanceTraveled, 0, 0);
+            }
+                
             _rb.linearVelocity = dodge * _speed;
             return;
         }

@@ -9,7 +9,6 @@ public class LightAffectSprite : MonoBehaviour,ILightAffectable
     [SerializeField, Tooltip("ç≈í·ñæìx")] private float _minBrightness = 0.2f;
     [SerializeField, Tooltip("ç≈ëÂñæìx")] private float _maxBrightness = 1.0f;
 
-    private float _current = 0f;
     private void Start()
     {
         _sr.color = new Color(_minBrightness, _minBrightness, _minBrightness,1f);

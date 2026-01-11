@@ -1,32 +1,42 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Playables;
 
 public class PlayerController : LightSourceBase
 {
     [Header("”’lİ’è")]
     [SerializeField, Tooltip("ˆÚ“®‘¬“x")] private float _speed = 2.0f;
     [SerializeField, Tooltip("‰ñ”ğ‚ÌˆÚ“®‹——£")] private float _distanceTraveled = 2f;
+    [Header("“–‚½‚è”»’è’²®")]
+    [SerializeField, Tooltip("’Êí‚Ì”¼Œa")] private float _normalRadius = 0.14f;
+    [SerializeField, Tooltip("’Êí‚Ì‚‚³")] private float _normalHeight = 0.4f;
+    [SerializeField, Tooltip("‰ñ”ğ‚Ì‚‚³”{—¦")] private float _dodgeHeightMag = 0.8f;
+    [SerializeField, Tooltip("ö•š‚Ì”¼Œa”{—¦")] private float _hideRadiusMag = 0.8f;
+    [SerializeField, Tooltip("ö•š‚Ì‚‚³”{—¦")] private float _hideHeightMag = 0.35f;
 
     private Rigidbody _rb;
+    private CapsuleCollider _col;
     private PlayerInput _playerInput;
-    private InputAction _moveAction,_attackAction,_dodgeAction;
+    private InputAction _moveAction,_attackAction,_dodgeAction,_hideAction;
     private PlayerStateMachine _stateMachine;
     private PlayerSpriteAnimator _spriteAnimator;
 
     private Vector2 _moveInput;
-    private bool _isAttack,_isDodge;
+    private bool _isAttack,_isDodge,_isHide;
 
     void Start()
     {
         _tr = transform;
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody>();
+        _col = GetComponent<CapsuleCollider>();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _spriteAnimator = GetComponent<PlayerSpriteAnimator>();
 
         _moveAction = _playerInput.actions["Move"];
         _attackAction = _playerInput.actions["Attack"];
         _dodgeAction = _playerInput.actions["Dodge"];
+        _hideAction = _playerInput.actions["Hide"];
     }
 
     // Update is called once per frame
@@ -48,14 +58,15 @@ public class PlayerController : LightSourceBase
     /// </summary>
     public void PlayerMove()
     {
-        if (_stateMachine.CurrentState == PlayerState.Attack)
+        if (_stateMachine.CurrentState == PlayerState.Attack
+            || _stateMachine.CurrentState == PlayerState.Hide)
         {
             return;
         }
         if (_stateMachine.CurrentState == PlayerState.Dodge)
         {
             Vector3 dodge = new Vector3(_distanceTraveled, 0, 0);
-            if (!_spriteAnimator._isRightFacing)
+            if (!_spriteAnimator.IsRightFacing)
             {
                 dodge = new Vector3(-_distanceTraveled, 0, 0);
             }
@@ -76,6 +87,7 @@ public class PlayerController : LightSourceBase
         _moveInput = _moveAction.ReadValue<Vector2>();
         _isAttack = _attackAction.WasPressedThisFrame();
         _isDodge = _dodgeAction.WasPressedThisFrame();
+        _isHide = _hideAction.IsPressed();
 
         //ƒXƒe[ƒgŠÇ—
         if(_isAttack && _stateMachine.CurrentState != PlayerState.Attack)
@@ -90,7 +102,22 @@ public class PlayerController : LightSourceBase
             return;
         }
 
-        if(_stateMachine.CurrentState == PlayerState.Attack
+        if (_isHide)
+        {
+            _stateMachine.ChangeState(PlayerState.Hide);
+            return;
+        }
+        else if (_spriteAnimator.IsEnterHide)
+        {
+            _spriteAnimator.IsEnterHide = false;
+            return;
+        }
+        else if(_stateMachine.CurrentState == PlayerState.Hide)
+        {
+            return;
+        }
+
+        if (_stateMachine.CurrentState == PlayerState.Attack
             || _stateMachine.CurrentState == PlayerState.Dodge) return;
 
         if (_moveInput.magnitude > 0.1f)
@@ -101,5 +128,29 @@ public class PlayerController : LightSourceBase
         else
             _stateMachine.ChangeState(PlayerState.Idle);
 
+    }
+    /// <summary>
+    /// ó‘Ô‚É‡‚í‚¹‚Ä‚‚³‚ğ’²®‚·‚é
+    /// </summary>
+    /// <param name="state"></param>
+    public void ChangeColliderHeight(PlayerState state)
+    {
+        switch (state)
+        {
+            case PlayerState.Dodge:
+                if(_col.height == _normalHeight * _dodgeHeightMag)return;
+                _col.height = _normalHeight * _dodgeHeightMag;
+                break;
+            case PlayerState.Hide:
+                if (_col.height == _normalHeight * _hideHeightMag) return;
+                _col.height = _normalHeight * _hideHeightMag;
+                _col.radius = _normalRadius * _hideRadiusMag;
+                break;
+            default:
+                if(_col.height == _normalHeight) return;
+                _col.height = _normalHeight;
+                _col.radius = _normalRadius;
+                break;
+        }
     }
 }

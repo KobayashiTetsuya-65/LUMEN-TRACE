@@ -4,6 +4,12 @@ using UnityEngine;
 public class PlayerStateMachine : MonoBehaviour
 {
     public PlayerState CurrentState { get; private set; }
+    private PlayerController _controller;
+
+    private void Awake()
+    {
+        _controller = GetComponent<PlayerController>();
+    }
 
     /// <summary>
     /// ƒvƒŒƒCƒ„[‚Ìó‘Ô•Ï‰»
@@ -29,12 +35,21 @@ public class PlayerStateMachine : MonoBehaviour
             case PlayerState.Dodge:
                 //–³“G”»’è‚Â‚­‚é
 
+                break;
+            case PlayerState.Hide:
+                //–¾‚é‚³’²®ˆ—‚Â‚­‚é
 
                 break;
         }
+        _controller.ChangeColliderHeight(state);
     }
     private void ExitState(PlayerState state)
     {
-
+        switch (state)
+        {
+            case PlayerState.Hide:
+                
+                break;
+        }
     }
 }

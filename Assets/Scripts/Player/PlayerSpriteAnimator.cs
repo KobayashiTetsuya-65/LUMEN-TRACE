@@ -10,14 +10,17 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("歩行時")] private Sprite[] _walkSprites;
     [SerializeField, Tooltip("攻撃時")] private Sprite[] _attackSprites;
     [SerializeField, Tooltip("回避時")] private Sprite[] _dodgeSprites;
+    [SerializeField, Tooltip("潜伏時")] private Sprite[] _hideSprites;
 
     [Header("数値設定")]
     [SerializeField, Tooltip("通常時の間隔")] private float _idleFrame = 0.15f;
     [SerializeField, Tooltip("歩行時の間隔")] private float _walkFrame = 0.15f;
     [SerializeField, Tooltip("攻撃時の間隔")] private float _attackFrame = 0.15f;
     [SerializeField, Tooltip("回避時の間隔")] private float _dodgeFrame = 0.15f;
+    [SerializeField, Tooltip("回避時の間隔")] private float _hideFrame = 0.15f;
 
-    public bool _isRightFacing { get; private set; } = true;
+    public bool IsRightFacing { get; private set; } = true;
+    public bool IsEnterHide = true;
 
     private PlayerStateMachine _stateMachine;
 
@@ -63,12 +66,40 @@ public class PlayerSpriteAnimator : MonoBehaviour
                     return;
                 }
             }
+            else if(_stateMachine.CurrentState == PlayerState.Hide)
+            {
+                if (IsEnterHide)
+                {
+                    _index++;
+                    if (_index >= _hideSprites.Length)
+                    {
+                        _index = _hideSprites.Length - 1;
+                        return;
+                    }
+                }
+                else
+                {
+                    _index--;
+                    if(_index <= 0)
+                    {
+                        _index = 0;
+                        _stateMachine.ChangeState(PlayerState.Idle);
+                        IsEnterHide = true;
+                        return;
+                    }
+                }
+
+            }
             else
             {
                 _index = (_index + 1) % sprites.Length;
             }
         }
     }
+    /// <summary>
+    /// プレイヤーの状態からアニメーションさせる画像を変化
+    /// </summary>
+    /// <returns></returns>
     private Sprite[] GetSpritesByState()
     {
         return _stateMachine.CurrentState switch
@@ -77,9 +108,14 @@ public class PlayerSpriteAnimator : MonoBehaviour
             PlayerState.Walk => _walkSprites,
             PlayerState.Attack => _attackSprites,
             PlayerState.Dodge => _dodgeSprites,
+            PlayerState.Hide => _hideSprites,
             _ => null
         };
     }
+    /// <summary>
+    /// プレイヤーの状態によってアニメーションフレームを変化
+    /// </summary>
+    /// <returns></returns>
     private float GetTimeByState()
     {
         return _stateMachine.CurrentState switch
@@ -88,7 +124,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
             PlayerState.Walk => _walkFrame,
             PlayerState.Attack => _attackFrame,
             PlayerState.Dodge => _dodgeFrame,
-            _ => 0.1f
+            PlayerState.Hide => _hideFrame,
+            _ => 0.08f
         };
     }
     /// <summary>
@@ -102,6 +139,6 @@ public class PlayerSpriteAnimator : MonoBehaviour
         else if(input < -0.01f)
             _sr.flipX = true;
 
-        _isRightFacing = !_sr.flipX;
+        IsRightFacing = !_sr.flipX;
     }
 }

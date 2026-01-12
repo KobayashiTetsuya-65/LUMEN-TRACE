@@ -9,13 +9,22 @@ public class LightAffectSprite : MonoBehaviour,ILightAffectable
     [SerializeField, Tooltip("ç≈í·ñæìx")] private float _minBrightness = 0.2f;
     [SerializeField, Tooltip("ç≈ëÂñæìx")] private float _maxBrightness = 1.0f;
 
+    private float _currentLight;
     private void Start()
     {
         _sr.color = new Color(_minBrightness, _minBrightness, _minBrightness,1f);
     }
-    public void SetLightPower(float lightValue)
+    void LateUpdate()
     {
-        lightValue = Mathf.Clamp(lightValue, _minBrightness, _maxBrightness);
-        _sr.color = new Color(lightValue, lightValue, lightValue, 1f);
+        float finalLight = Mathf.Clamp(_currentLight, _minBrightness, _maxBrightness);
+        _sr.color = new Color(finalLight, finalLight, finalLight, 1f);
+
+        _currentLight = 0;
+    }
+    public void AddLight(float value)
+    {
+        value = Mathf.Clamp(value, _minBrightness, _maxBrightness);
+        _currentLight += value;
+
     }
 }

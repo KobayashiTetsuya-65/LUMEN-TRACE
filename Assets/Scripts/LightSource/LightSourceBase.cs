@@ -37,7 +37,7 @@ public abstract class LightSourceBase : MonoBehaviour
                     dist = Mathf.Clamp01((targetPos.position.x - _tr.position.x) / _lightRadius);
                 }
 
-                lightingObj.SetLightPower(1f - dist);
+                lightingObj.AddLight(1f - dist);
             }
         }
     }

@@ -1,4 +1,4 @@
 public interface ILightAffectable
 {
-    void SetLightPower(float lightValue);
+    void AddLight(float value);
 }

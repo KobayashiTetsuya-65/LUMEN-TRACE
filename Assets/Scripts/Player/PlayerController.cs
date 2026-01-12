@@ -7,6 +7,7 @@ public class PlayerController : LightSourceBase
     [Header("”’lİ’è")]
     [SerializeField, Tooltip("ˆÚ“®‘¬“x")] private float _speed = 2.0f;
     [SerializeField, Tooltip("‰ñ”ğ‚ÌˆÚ“®‹——£")] private float _distanceTraveled = 2f;
+
     [Header("“–‚½‚è”»’è’²®")]
     [SerializeField, Tooltip("’Êí‚Ì”¼Œa")] private float _normalRadius = 0.14f;
     [SerializeField, Tooltip("’Êí‚Ì‚‚³")] private float _normalHeight = 0.4f;

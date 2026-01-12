@@ -27,17 +27,20 @@ public abstract class LightSourceBase : MonoBehaviour
             {
                 Transform targetPos = target.transform;
                 float dist = 1f;
+                float dir;
 
                 if (_tr.position.x >= targetPos.position.x)
                 {
-                    dist = Mathf.Clamp01((_tr.position.x - targetPos.position.x) / _lightRadius);
+                    dir = _tr.position.x - targetPos.position.x;
+                    dist = Mathf.Clamp01(dir / _lightRadius);
                 }
                 else
                 {
-                    dist = Mathf.Clamp01((targetPos.position.x - _tr.position.x) / _lightRadius);
+                    dir = targetPos.position.x - _tr.position.x;
+                    dist = Mathf.Clamp01(dir / _lightRadius);
                 }
 
-                lightingObj.AddLight(1f - dist);
+                lightingObj.AddLight(1f - dist,dir);
             }
         }
     }

@@ -21,7 +21,7 @@ public class LightAffectSprite : MonoBehaviour,ILightAffectable
 
         _currentLight = 0;
     }
-    public void AddLight(float value)
+    public void AddLight(float value,float range)
     {
         value = Mathf.Clamp(value, _minBrightness, _maxBrightness);
         _currentLight += value;

@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class NormalEnemyController : MonoBehaviour,IEnemy
 {
+    [Header("参照")]
+    [SerializeField, Tooltip("中心")] private Transform _centerPoint;
+
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
     [SerializeField, Tooltip("光源判定明度")] private float _lightDetectionValue = 0.2f;
+    [SerializeField, Tooltip("攻撃判定距離")] private float _attackDetectionRange = 2f;
+    [SerializeField, Tooltip("攻撃クールタイム")] private float _attackCooldown = 0.5f;
+    [SerializeField, Tooltip("反転しない距離")] private float _flipDeadZone = 0.1f;
 
     [Header("当たり判定調整")]
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.2f;
@@ -16,11 +22,10 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     private EnemyStateMachine _stateMachine;
     private EnemySpriteAnimator _spriteAnimator;
     private EnemyLightSensor _lightSensor;
+    private EnemyPlayerDetector _playerDetector;
     
-    private bool _isChase = false;
     private Transform _target;
-    private Vector3 _center;
-
+    private float _lastAttackTime;
 
     void Start()
     {
@@ -30,13 +35,28 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         _stateMachine = GetComponent<EnemyStateMachine>();
         _spriteAnimator = GetComponent<EnemySpriteAnimator>();
         _lightSensor = GetComponent<EnemyLightSensor>();
-        _center = _col.center;
+        _playerDetector = GetComponentInChildren<EnemyPlayerDetector>();
+
+        _col.radius = _normalRadius;
+        _col.height = _normalHeight;
     }
 
     void Update()
     {
-        ThinkingPatterns();
+        _target = _playerDetector.CurrentTarget;
+        SearchPlayer();
 
+        if (_stateMachine.CurrentState == EnemyState.Attack)
+        {
+            if (_spriteAnimator.IsAttackFinished)
+            {
+                _spriteAnimator.ResetAttack();
+                _stateMachine.ChangeState(EnemyState.Idle);
+            }
+            return;
+        }
+
+        ThinkingPatterns();
     }
     private void LateUpdate()
     {
@@ -48,21 +68,53 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     }
     public void ThinkingPatterns()
     {
+        if(_target == null)
+        {
+            _stateMachine.ChangeState(EnemyState.Idle);
+            return;
+        }
+
+        //攻撃判定
+        float distanceX = Mathf.Abs(_target.position.x - _centerPoint.position.x);
+        if (distanceX <= _attackDetectionRange &&
+            Time.time >= _lastAttackTime + _attackCooldown)
+        {
+            _lastAttackTime = Time.time;
+            _stateMachine.ChangeState(EnemyState.Attack);
+            return;
+        }
+
         //光源判定
         if (_lightSensor.CurrentLight > _lightDetectionValue)
         {
             _stateMachine.ChangeState(EnemyState.Walk);
+            
+            return;
         }
-        else
-        {
-            _stateMachine.ChangeState(EnemyState.Idle);
-        }
+
+        _stateMachine.ChangeState(EnemyState.Idle);
     }
     public void Move()
     {
-        if (_stateMachine.CurrentState != EnemyState.Walk) return;
+        if (_stateMachine.CurrentState != EnemyState.Walk)
+        {
+            _rb.linearVelocity = Vector3.zero;
+            return;
+        }
 
-        Vector3 move = _spriteAnimator.IsLeftFacing ? new Vector3(-1f,0,0) : new Vector3(1f,0,0);
+        Vector3 move = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
         _rb.linearVelocity = _speed * move;
+    }
+    public void SearchPlayer()
+    {
+        if (_target == null) return;
+
+        float diff = _target.position.x - _tr.position.x;
+
+        if (Mathf.Abs(diff) < _flipDeadZone)
+            return;
+
+        bool isLeft = _target.position.x < _tr.position.x;
+        _spriteAnimator.ChangeSpriteFlipX(isLeft);
     }
 }

@@ -18,6 +18,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("Ž€–SŽž‚ÌŠÔŠu")] private float _deadFrame = 0.15f;
 
     public bool IsLeftFacing { get; private set; } = true;
+    public bool IsAttackFinished { get; private set; }
 
     private EnemyStateMachine _stateMachine;
 
@@ -59,7 +60,7 @@ public class EnemySpriteAnimator : MonoBehaviour
                     _index = 0;
                     if(_stateMachine.CurrentState == EnemyState.Attack)
                     {
-                        _stateMachine.ChangeState(EnemyState.Idle);
+                        IsAttackFinished = true;
                         return;
                     }
                     else
@@ -111,6 +112,10 @@ public class EnemySpriteAnimator : MonoBehaviour
     public void ChangeSpriteFlipX(bool isLeftFacing)
     {
         _sr.flipX = !isLeftFacing;
-        IsLeftFacing = _sr.flipX;
+        IsLeftFacing = isLeftFacing;
+    }
+    public void ResetAttack()
+    {
+        IsAttackFinished = false;
     }
 }

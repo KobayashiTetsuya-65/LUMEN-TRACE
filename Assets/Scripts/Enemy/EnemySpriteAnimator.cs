@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemySpriteAnimator : MonoBehaviour
 {
     [Header("参照")]
+    [SerializeField, Tooltip("左右反転用の親オブジェクト")] private Transform _spriteRoot;
     [SerializeField, Tooltip("見た目")] private SpriteRenderer _sr;
 
     [Header("画像")]
@@ -16,6 +17,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("歩行時の間隔")] private float _walkFrame = 0.06f;
     [SerializeField, Tooltip("攻撃時の間隔")] private float _attackFrame = 0.08f;
     [SerializeField, Tooltip("死亡時の間隔")] private float _deadFrame = 0.15f;
+    [SerializeField, Tooltip("スケール")] private float _scale = 3f;
 
     public bool IsLeftFacing { get; private set; } = true;
     public bool IsAttackFinished { get; private set; }
@@ -111,8 +113,10 @@ public class EnemySpriteAnimator : MonoBehaviour
     /// <param name="input"></param>
     public void ChangeSpriteFlipX(bool isLeftFacing)
     {
-        _sr.flipX = !isLeftFacing;
         IsLeftFacing = isLeftFacing;
+
+        float x = IsLeftFacing ? 1f : -1f;
+        _spriteRoot.localScale = new Vector3(x * _scale, _scale, _scale);
     }
     public void ResetAttack()
     {

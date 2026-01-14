@@ -347,6 +347,7 @@ MonoBehaviour:
   _attackDetectionRange: 3
   _attackCooldown: 2
   _flipDeadZone: 0.2
+  _hitStopTime: 0.05
   _normalRadius: 0.2
   _normalHeight: 0.6
 --- !u!114 &147273941
@@ -666,7 +667,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &338157765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -714,7 +714,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &360373562
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1107,7 +1106,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &561050622
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1239,7 +1237,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &723063482
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1459,7 +1456,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &786248161
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1507,7 +1503,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &799206807
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2035,7 +2030,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1109379524
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2273,7 +2267,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1263173409
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2306,6 +2299,7 @@ GameObject:
   - component: {fileID: 1474805538}
   - component: {fileID: 1474805537}
   - component: {fileID: 1474805536}
+  - component: {fileID: 1474805539}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2352,6 +2346,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1474805539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474805535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecb8a4cd90225894bb0cb6666493ff34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopManager
 --- !u!1001 &1519193605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2474,7 +2480,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1562146867
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2624,7 +2629,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1654657529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2672,7 +2676,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1681922027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2889,7 +2892,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1746487014
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3016,7 +3018,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1849463281
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3445,7 +3446,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &1981201065
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3546,7 +3546,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 0.8
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!1 &2017700403 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4653831799294361312, guid: 7903d081236f2304396572efb80b5f8f, type: 3}
@@ -3573,7 +3572,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 0.8
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &2017700407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3621,7 +3619,6 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.5
-  _decayThreshold: 0.02
 --- !u!65 &2040858310
 BoxCollider:
   m_ObjectHideFlags: 0

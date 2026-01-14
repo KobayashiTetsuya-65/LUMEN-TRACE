@@ -45,20 +45,8 @@ public abstract class LightSourceBase : MonoBehaviour
             if (target.TryGetComponent<ILightAffectable>(out var lightingObj))
             {
                 Transform targetPos = target.transform;
-                float dist = 1f;
-                float dir;
-
-                if (_tr.position.x >= targetPos.position.x)
-                {
-                    dir = _tr.position.x - targetPos.position.x;
-                    dist = Mathf.Clamp01(dir / _lightRadius);
-                }
-                else
-                {
-                    dir = targetPos.position.x - _tr.position.x;
-                    dist = Mathf.Clamp01(dir / _lightRadius);
-                }
-
+                float dir = Mathf.Abs(_tr.position.x - targetPos.position.x);
+                float dist = Mathf.Clamp01(dir / _lightRadius);
                 lightingObj.AddLight(1f - dist,dir);
             }
         }

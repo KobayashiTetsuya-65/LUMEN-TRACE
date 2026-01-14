@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        Application.targetFrameRate = 60;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

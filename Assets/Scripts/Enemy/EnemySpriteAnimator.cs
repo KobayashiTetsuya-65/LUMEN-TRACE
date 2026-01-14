@@ -23,7 +23,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("UŒ‚‚ÌŠÔŠu")] private float _attackFrame = 0.08f;
     [SerializeField, Tooltip("€–S‚ÌŠÔŠu")] private float _deadFrame = 0.15f;
     [SerializeField, Tooltip("ƒXƒP[ƒ‹")] private float _scale = 3f;
-    [SerializeField, Tooltip("ˆê‰ñ–Ú‚ÌUŒ‚”»’èƒtƒŒ[ƒ€")] private int _firstAttackFrame = 1;
+    [SerializeField, Tooltip("ˆê‰ñ–Ú‚ÌUŒ‚”»’èƒtƒŒ[ƒ€")] private int _firstAttackFrame = 4;
     [SerializeField, Tooltip("ˆê‰ñ–Ú‚ÌUŒ‚”»’è‚Ì‘±ƒtƒŒ[ƒ€”")] private int _sustainedFirstAttackFrame = 5;
 
     private EnemyStateMachine _stateMachine;

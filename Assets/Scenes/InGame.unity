@@ -409,7 +409,7 @@ MonoBehaviour:
   _attackFrame: 0.08
   _deadFrame: 0.15
   _scale: 3
-  _firstAttackFrame: 4
+  _firstAttackFrame: 3
   _sustainedFirstAttackFrame: 3
 --- !u!1 &159955208
 GameObject:
@@ -2279,6 +2279,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 3.03125, z: 0.2}
   m_Center: {x: 0, y: 1.484375, z: 0}
+--- !u!1 &1474805535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1474805538}
+  - component: {fileID: 1474805537}
+  - component: {fileID: 1474805536}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1474805536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474805535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0c6bfffd5272f5458621fe5d52f2348, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+--- !u!114 &1474805537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474805535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117cab0d4070b5843b0c691add83dccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+--- !u!4 &1474805538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1474805535}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 26.16386, y: 0.66376, z: 37.57}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1519193605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2369,8 +2426,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 238f133f85eceee499e873e4a9df9cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StreetLight
+  _light: {fileID: 0}
+  _maxRadius: 10
+  _minRadius: 3
   _lightRadius: 5
   _lightPower: 1
+  _radiusChangeSpeed: 5
 --- !u!1 &1562146863 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1797362938718863010, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
@@ -3141,11 +3202,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb124b8833cae64dbd44a72f0a4bbb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  _light: {fileID: 0}
+  _maxRadius: 10
+  _minRadius: 3
   _lightRadius: 10
   _lightPower: 1
+  _radiusChangeSpeed: 5
   _attackCollider: {fileID: 1951966104}
   _speed: 4
   _distanceTraveled: 1
+  _normalLightRadius: 10
+  _hideLightRadius: 3
   _normalRadius: 0.14
   _normalHeight: 0.4
   _dodgeHeightMag: 0.8
@@ -3232,6 +3299,7 @@ MonoBehaviour:
   _sustainedSecondAttackFrame: 3
   _startDodgeFrame: 1
   _sustainedDodgeFrame: 6
+  _startHideFrame: 1
 --- !u!1 &1951966104
 GameObject:
   m_ObjectHideFlags: 0
@@ -3546,3 +3614,4 @@ SceneRoots:
   - {fileID: 1083832431}
   - {fileID: 1728620029}
   - {fileID: 1004048389}
+  - {fileID: 1474805538}

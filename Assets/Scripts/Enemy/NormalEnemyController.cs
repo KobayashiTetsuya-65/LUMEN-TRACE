@@ -90,7 +90,6 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         {
             _lastAttackTime = Time.time;
             _stateMachine.ChangeState(EnemyState.Attack);
-            Attack(true);
             return;
         }
 

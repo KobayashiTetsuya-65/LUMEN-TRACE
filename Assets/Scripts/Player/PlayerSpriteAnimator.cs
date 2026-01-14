@@ -22,12 +22,17 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("回避時の間隔")] private float _dodgeFrame = 0.15f;
     [SerializeField, Tooltip("回避時の間隔")] private float _hideFrame = 0.15f;
     [SerializeField, Tooltip("スケール")] private float _scale = 3f;
+    [SerializeField, Tooltip("一回目の攻撃判定フレーム")] private int _firstAttackFrame = 1;
+    [SerializeField, Tooltip("二回目の攻撃判定フレーム")] private int _secondAttackFrame = 5;
+    [SerializeField, Tooltip("攻撃判定の持続フレーム数")] private int _sustainedAttackFrame = 2;
+
 
     public bool IsRightFacing { get; private set; } = true;
     public bool IsFinishAction { get; private set; } = false;
     public bool IsEnterHide = true;
 
     private PlayerStateMachine _stateMachine;
+    private PlayerController _controller;
 
     private PlayerState _prevState;
     private float _timer, _frameTime;
@@ -36,6 +41,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
     private void Awake()
     {
         _stateMachine = GetComponent<PlayerStateMachine>();
+        _controller = GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -63,6 +69,19 @@ public class PlayerSpriteAnimator : MonoBehaviour
             if(_stateMachine.CurrentState == PlayerState.Attack ||
                 _stateMachine.CurrentState == PlayerState.Dodge)
             {
+                if(_stateMachine.CurrentState == PlayerState.Attack)
+                {
+                    if(_index == _firstAttackFrame ||
+                        _index == _secondAttackFrame)
+                    {
+                        _controller.Attack(true);
+                    }
+                    else if(_index == _firstAttackFrame + _sustainedAttackFrame ||
+                        _index == _secondAttackFrame + _sustainedAttackFrame)
+                    {
+                        _controller.Attack(false);
+                    }
+                }
                 _index++;
                 if (_index >= sprites.Length)
                 {

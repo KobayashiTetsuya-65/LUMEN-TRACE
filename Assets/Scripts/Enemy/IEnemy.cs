@@ -4,4 +4,5 @@ public interface IEnemy
 {
     void Move();
     void ThinkingPatterns();
+    void Damaged();
 }

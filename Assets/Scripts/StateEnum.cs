@@ -1,3 +1,6 @@
+/// <summary>
+/// ƒvƒŒƒCƒ„[‚Ìó‘Ô
+/// </summary>
 public enum PlayerState
 {
     Idle,
@@ -6,6 +9,9 @@ public enum PlayerState
     Dodge,
     Hide
 }
+/// <summary>
+/// “G‚Ìó‘Ô
+/// </summary>
 public enum EnemyState
 {
     Idle,

@@ -5,10 +5,14 @@ public class PlayerStateMachine : MonoBehaviour
 {
     public PlayerState CurrentState { get; private set; }
     private PlayerController _controller;
+    private PlayerSpriteAnimator _animator;
+
+    private Coroutine _coroutine;
 
     private void Awake()
     {
         _controller = GetComponent<PlayerController>();
+        _animator = GetComponent<PlayerSpriteAnimator>();
     }
 
     /// <summary>
@@ -30,15 +34,15 @@ public class PlayerStateMachine : MonoBehaviour
         {
             case PlayerState.Attack:
                 //UŒ‚”»’èì‚é
-
+                _coroutine = StartCoroutine(CheckActionFinish());
                 break;
             case PlayerState.Dodge:
                 //–³“G”»’è‚Â‚­‚é
-
+                _coroutine = StartCoroutine(CheckActionFinish());
                 break;
             case PlayerState.Hide:
                 //–¾‚é‚³’²®ˆ—‚Â‚­‚é
-
+                _coroutine = StartCoroutine(CheckActionFinish());
                 break;
         }
         _controller.ChangeColliderHeight(state);
@@ -51,5 +55,12 @@ public class PlayerStateMachine : MonoBehaviour
                 
                 break;
         }
+    }
+    private IEnumerator CheckActionFinish()
+    {
+        yield return new WaitUntil(() => _animator.IsFinishAction);
+        _controller.Attack(false);
+        ChangeState(PlayerState.Idle);
+        _animator.FinishAction(false);
     }
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// 敵のアニメーション制御
+/// </summary>
 public class EnemySpriteAnimator : MonoBehaviour
 {
     [Header("参照")]

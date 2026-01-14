@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// 明度を感知して敵自身の明るさを変える
+/// </summary>
 public class EnemyLightSensor : MonoBehaviour,ILightAffectable
 {
     [Header("参照")]

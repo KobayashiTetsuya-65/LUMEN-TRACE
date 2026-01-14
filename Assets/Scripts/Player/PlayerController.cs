@@ -1,9 +1,16 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
-
-public class PlayerController : LightSourceBase
+using UnityEngine.Rendering;
+/// <summary>
+/// プレイヤーの行動制御
+/// </summary>
+public class PlayerController : LightSourceBase,IPlayer
 {
+    [Header("参照")]
+    [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
+
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
     [SerializeField, Tooltip("回避時の移動距離")] private float _distanceTraveled = 2f;
@@ -38,6 +45,8 @@ public class PlayerController : LightSourceBase
         _attackAction = _playerInput.actions["Attack"];
         _dodgeAction = _playerInput.actions["Dodge"];
         _hideAction = _playerInput.actions["Hide"];
+
+        _attackCollider.SetActive(false);
     }
 
     // Update is called once per frame
@@ -94,6 +103,7 @@ public class PlayerController : LightSourceBase
         if(_isAttack && _stateMachine.CurrentState != PlayerState.Attack)
         {
             _stateMachine.ChangeState(PlayerState.Attack);
+            Attack(true);
             return;
         }
 
@@ -153,5 +163,20 @@ public class PlayerController : LightSourceBase
                 _col.radius = _normalRadius;
                 break;
         }
+    }
+    /// <summary>
+    /// プレイヤーの攻撃
+    /// </summary>
+    /// <param name="isAppear"></param>
+    public void Attack(bool isAppear)
+    {
+        _attackCollider.SetActive(isAppear);
+    }
+    /// <summary>
+    /// ダメージを受ける
+    /// </summary>
+    public void Damaged()
+    {
+        Debug.Log("ダメージを受けた");
     }
 }

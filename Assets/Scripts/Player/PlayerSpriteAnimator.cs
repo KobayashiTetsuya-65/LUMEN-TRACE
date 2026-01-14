@@ -1,8 +1,11 @@
+using System.IO.Compression;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSpriteAnimator : MonoBehaviour
 {
     [Header("参照")]
+    [SerializeField, Tooltip("見た目の親オブジェクト")] private Transform _visualRoot;
     [SerializeField, Tooltip("見た目")] private SpriteRenderer _sr;
 
     [Header("画像")]
@@ -18,8 +21,10 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("攻撃時の間隔")] private float _attackFrame = 0.15f;
     [SerializeField, Tooltip("回避時の間隔")] private float _dodgeFrame = 0.15f;
     [SerializeField, Tooltip("回避時の間隔")] private float _hideFrame = 0.15f;
+    [SerializeField, Tooltip("スケール")] private float _scale = 3f;
 
     public bool IsRightFacing { get; private set; } = true;
+    public bool IsFinishAction { get; private set; } = false;
     public bool IsEnterHide = true;
 
     private PlayerStateMachine _stateMachine;
@@ -62,7 +67,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
                 if (_index >= sprites.Length)
                 {
                     _index = 0;
-                    _stateMachine.ChangeState(PlayerState.Idle);
+                    FinishAction(true);
+                    
                     return;
                 }
             }
@@ -83,7 +89,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
                     if(_index <= 0)
                     {
                         _index = 0;
-                        _stateMachine.ChangeState(PlayerState.Idle);
+                        FinishAction(true);
                         IsEnterHide = true;
                         return;
                     }
@@ -135,10 +141,22 @@ public class PlayerSpriteAnimator : MonoBehaviour
     public void ChangeSpriteFlipX(float input)
     {
         if(input > 0.01f)
-            _sr.flipX = false;
+        {
+            IsRightFacing = true;
+            _visualRoot.localScale = new Vector3(1f * _scale,_scale,_scale);
+        }
         else if(input < -0.01f)
-            _sr.flipX = true;
-
-        IsRightFacing = !_sr.flipX;
+        {
+            IsRightFacing = false;
+            _visualRoot.localScale = new Vector3(-1f * _scale, _scale, _scale);
+        }
+    }
+    /// <summary>
+    /// アクション終了フラグ
+    /// </summary>
+    /// <param name="isFinish"></param>
+    public void FinishAction(bool isFinish)
+    {
+        IsFinishAction = isFinish;
     }
 }

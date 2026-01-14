@@ -1,5 +1,7 @@
 using UnityEngine;
-
+/// <summary>
+/// プレイヤーを捜索しターゲットする
+/// </summary>
 public class EnemyPlayerDetector : MonoBehaviour
 {
     public Transform CurrentTarget {  get; private set; }

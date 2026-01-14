@@ -1,8 +1,12 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
-
+/// <summary>
+/// 敵の行動制御
+/// </summary>
 public class NormalEnemyController : MonoBehaviour,IEnemy
 {
     [Header("参照")]
+    [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
     [SerializeField, Tooltip("中心")] private Transform _centerPoint;
 
     [Header("数値設定")]
@@ -39,6 +43,8 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         _col.radius = _normalRadius;
         _col.height = _normalHeight;
+
+        _attackCollider.SetActive(false);
     }
 
     void Update()
@@ -66,6 +72,9 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     {
         Move();
     }
+    /// <summary>
+    /// 行動選択
+    /// </summary>
     public void ThinkingPatterns()
     {
         if(_target == null)
@@ -81,11 +90,13 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         {
             _lastAttackTime = Time.time;
             _stateMachine.ChangeState(EnemyState.Attack);
+            Attack(true);
             return;
         }
 
         //光源判定
-        if (_lightSensor.CurrentLight > _lightDetectionValue)
+        if (_lightSensor.CurrentLight > _lightDetectionValue &&
+            distanceX > _attackDetectionRange)
         {
             _stateMachine.ChangeState(EnemyState.Walk);
             
@@ -94,6 +105,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         _stateMachine.ChangeState(EnemyState.Idle);
     }
+
     public void Move()
     {
         if (_stateMachine.CurrentState != EnemyState.Walk)
@@ -105,6 +117,22 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         Vector3 move = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
         _rb.linearVelocity = _speed * move;
     }
+    public void Attack(bool isAppear)
+    {
+        if (!isAppear)
+        {
+            EnemyAttackDetection enemyAttack = _attackCollider.GetComponent<EnemyAttackDetection>();
+            enemyAttack.IsAttack = false;
+        }
+        _attackCollider.SetActive(isAppear);
+    }
+    public void Damaged()
+    {
+        Debug.Log("ダメージを与えた！");
+    }
+    /// <summary>
+    /// プレイヤーを探索し、発見したらターゲットする
+    /// </summary>
     public void SearchPlayer()
     {
         if (_target == null) return;

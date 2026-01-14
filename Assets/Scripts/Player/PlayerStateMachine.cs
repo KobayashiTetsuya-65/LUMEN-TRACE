@@ -62,6 +62,7 @@ public class PlayerStateMachine : MonoBehaviour
         yield return new WaitUntil(() => _animator.IsFinishAction);
         _controller.Attack(false);
         _controller.ChangeInvincibleState(false);
+        _controller.Hide(false);
         ChangeState(PlayerState.Idle);
         _animator.FinishAction(false);
     }

@@ -32,6 +32,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("二回目の攻撃判定の持続フレーム数")] private int _sustainedSecondAttackFrame = 2;
     [SerializeField, Tooltip("回避用無敵開始フレーム")] private int _startDodgeFrame = 2;
     [SerializeField, Tooltip("回避持続フレーム数")] private int _sustainedDodgeFrame = 3;
+    [SerializeField, Tooltip("潜伏開始フレーム")] private int _startHideFrame = 1;
 
     private PlayerStateMachine _stateMachine;
     private PlayerController _controller;
@@ -108,6 +109,11 @@ public class PlayerSpriteAnimator : MonoBehaviour
             {
                 if (IsEnterHide)
                 {
+                    if(_index == _startHideFrame)
+                    {
+                        _controller.Hide(true);
+                    }
+
                     _index++;
                     if (_index >= _hideSprites.Length)
                     {
@@ -117,6 +123,11 @@ public class PlayerSpriteAnimator : MonoBehaviour
                 }
                 else
                 {
+                    if (_index == _startHideFrame)
+                    {
+                        _controller.Hide(false);
+                    }
+
                     _index--;
                     if(_index <= 0)
                     {

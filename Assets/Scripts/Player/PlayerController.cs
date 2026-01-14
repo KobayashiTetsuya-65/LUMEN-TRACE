@@ -16,6 +16,8 @@ public class PlayerController : LightSourceBase,IPlayer
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
     [SerializeField, Tooltip("回避時の移動距離")] private float _distanceTraveled = 2f;
+    [SerializeField, Tooltip("通常時の光源の半径")] private float _normalLightRadius = 10f;
+    [SerializeField, Tooltip("隠れる時の光源の半径")] private float _hideLightRadius = 3f;
 
     [Header("当たり判定調整")]
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.14f;
@@ -61,8 +63,9 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         
     }
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         PlayerMove();
     }
     /// <summary>
@@ -174,10 +177,14 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         _attackCollider.SetActive(isAppear);
     }
+    public void Hide(bool toHide)
+    {
+        float radius = toHide ? _hideLightRadius : _normalLightRadius;
+        ChangeLightRadius(radius);
+    }
     public void ChangeInvincibleState(bool toInvincible)
     {
         IsInvincible = toInvincible;
-        if (IsInvincible) Debug.Log("回避！");
     }
     /// <summary>
     /// ダメージを受ける

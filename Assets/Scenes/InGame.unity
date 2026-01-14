@@ -3231,7 +3231,7 @@ MonoBehaviour:
   _sustainedFirstAttackFrame: 2
   _sustainedSecondAttackFrame: 3
   _startDodgeFrame: 1
-  _sustainedDodgeFrame: 5
+  _sustainedDodgeFrame: 6
 --- !u!1 &1951966104
 GameObject:
   m_ObjectHideFlags: 0

@@ -409,7 +409,7 @@ MonoBehaviour:
   _attackFrame: 0.08
   _deadFrame: 0.15
   _scale: 3
-  _firstAttackFrame: 3
+  _firstAttackFrame: 4
   _sustainedFirstAttackFrame: 3
 --- !u!1 &159955208
 GameObject:
@@ -3175,6 +3175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e4c86fc0eb7f448ba85496b29bbfb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpriteAnimator
+  IsEnterHide: 1
   _visualRoot: {fileID: 1950673312}
   _sr: {fileID: 1950673314}
   _idleSprites:
@@ -3229,7 +3230,8 @@ MonoBehaviour:
   _secondAttackFrame: 6
   _sustainedFirstAttackFrame: 2
   _sustainedSecondAttackFrame: 3
-  IsEnterHide: 1
+  _startDodgeFrame: 1
+  _sustainedDodgeFrame: 5
 --- !u!1 &1951966104
 GameObject:
   m_ObjectHideFlags: 0

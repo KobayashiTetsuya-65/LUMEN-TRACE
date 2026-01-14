@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerSpriteAnimator : MonoBehaviour
 {
+    public bool IsRightFacing { get; private set; } = true;
+    public bool IsFinishAction { get; private set; } = false;
+    public bool IsEnterHide = true;
+
     [Header("参照")]
     [SerializeField, Tooltip("見た目の親オブジェクト")] private Transform _visualRoot;
     [SerializeField, Tooltip("見た目")] private SpriteRenderer _sr;
@@ -26,11 +30,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("二回目の攻撃判定フレーム")] private int _secondAttackFrame = 5;
     [SerializeField, Tooltip("一回目の攻撃判定の持続フレーム数")] private int _sustainedFirstAttackFrame = 2;
     [SerializeField, Tooltip("二回目の攻撃判定の持続フレーム数")] private int _sustainedSecondAttackFrame = 2;
-
-
-    public bool IsRightFacing { get; private set; } = true;
-    public bool IsFinishAction { get; private set; } = false;
-    public bool IsEnterHide = true;
+    [SerializeField, Tooltip("回避用無敵開始フレーム")] private int _startDodgeFrame = 2;
+    [SerializeField, Tooltip("回避持続フレーム数")] private int _sustainedDodgeFrame = 3;
 
     private PlayerStateMachine _stateMachine;
     private PlayerController _controller;
@@ -81,6 +82,17 @@ public class PlayerSpriteAnimator : MonoBehaviour
                         _index == _secondAttackFrame + _sustainedSecondAttackFrame)
                     {
                         _controller.Attack(false);
+                    }
+                }
+                if(_stateMachine.CurrentState == PlayerState.Dodge)
+                {
+                    if(_index == _startDodgeFrame)
+                    {
+                        _controller.ChangeInvincibleState(true);
+                    }
+                    else if(_index == _startDodgeFrame + _sustainedDodgeFrame)
+                    {
+                        _controller.ChangeInvincibleState(false);
                     }
                 }
                 _index++;

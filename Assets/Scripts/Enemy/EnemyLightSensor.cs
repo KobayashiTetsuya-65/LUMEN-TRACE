@@ -4,6 +4,9 @@ using UnityEngine;
 /// </summary>
 public class EnemyLightSensor : MonoBehaviour,ILightAffectable
 {
+    public float CurrentLight { get; private set; }
+    public float BrightestRange { get; private set; }
+
     [Header("参照")]
     [SerializeField, Tooltip("見た目")] private SpriteRenderer _sr;
 
@@ -11,9 +14,6 @@ public class EnemyLightSensor : MonoBehaviour,ILightAffectable
     [SerializeField, Tooltip("最低明度")] private float _minBrightness = 0.2f;
     [SerializeField, Tooltip("最大明度")] private float _maxBrightness = 1.0f;
     [SerializeField, Tooltip("光が減衰する速度")] private float _decaySpeed = 1.5f;
-
-    public float CurrentLight { get; private set; }
-    public float BrightestRange { get; private set; }
 
     private float _nextLight,_nextDir;
     private void Awake()

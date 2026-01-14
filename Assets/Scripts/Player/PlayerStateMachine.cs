@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerStateMachine : MonoBehaviour
 {
     public PlayerState CurrentState { get; private set; }
+
     private PlayerController _controller;
     private PlayerSpriteAnimator _animator;
 
@@ -60,6 +61,7 @@ public class PlayerStateMachine : MonoBehaviour
     {
         yield return new WaitUntil(() => _animator.IsFinishAction);
         _controller.Attack(false);
+        _controller.ChangeInvincibleState(false);
         ChangeState(PlayerState.Idle);
         _animator.FinishAction(false);
     }

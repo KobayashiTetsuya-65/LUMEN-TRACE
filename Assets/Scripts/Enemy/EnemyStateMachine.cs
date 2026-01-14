@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyStateMachine : MonoBehaviour
 {
     public EnemyState CurrentState { get; private set; }
+
     private NormalEnemyController _controller;
     private void Awake()
     {

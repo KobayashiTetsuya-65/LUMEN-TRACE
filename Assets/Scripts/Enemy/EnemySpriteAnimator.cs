@@ -4,6 +4,9 @@ using UnityEngine;
 /// </summary>
 public class EnemySpriteAnimator : MonoBehaviour
 {
+    public bool IsLeftFacing { get; private set; } = true;
+    public bool IsAttackFinished { get; private set; }
+
     [Header("参照")]
     [SerializeField, Tooltip("左右反転用の親オブジェクト")] private Transform _spriteRoot;
     [SerializeField, Tooltip("見た目")] private SpriteRenderer _sr;
@@ -22,9 +25,6 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("スケール")] private float _scale = 3f;
     [SerializeField, Tooltip("一回目の攻撃判定フレーム")] private int _firstAttackFrame = 1;
     [SerializeField, Tooltip("一回目の攻撃判定の持続フレーム数")] private int _sustainedFirstAttackFrame = 5;
-
-    public bool IsLeftFacing { get; private set; } = true;
-    public bool IsAttackFinished { get; private set; }
 
     private EnemyStateMachine _stateMachine;
     private NormalEnemyController _controller;

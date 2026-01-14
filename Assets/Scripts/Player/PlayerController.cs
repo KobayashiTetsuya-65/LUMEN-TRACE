@@ -8,6 +8,8 @@ using UnityEngine.Rendering;
 /// </summary>
 public class PlayerController : LightSourceBase,IPlayer
 {
+    public bool IsInvincible { get; private set; } = false;
+
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
 
@@ -172,11 +174,23 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         _attackCollider.SetActive(isAppear);
     }
+    public void ChangeInvincibleState(bool toInvincible)
+    {
+        IsInvincible = toInvincible;
+        if (IsInvincible) Debug.Log("回避！");
+    }
     /// <summary>
     /// ダメージを受ける
     /// </summary>
     public void Damaged()
     {
-        Debug.Log("ダメージを受けた");
+        if (IsInvincible)
+        {
+
+        }
+        else
+        {
+            Debug.Log("ダメージを受けた");
+        }
     }
 }

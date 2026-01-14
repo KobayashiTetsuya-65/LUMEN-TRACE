@@ -12,6 +12,7 @@ public class PlayerController : LightSourceBase,IPlayer
 
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
+    [SerializeField, Tooltip("足元のライト")] private PlayerLightVisual _lightVisual;
 
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
@@ -58,6 +59,9 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         base.Update();
         PlayerInput();
+        float normalized = Mathf.InverseLerp(_minRadius,_maxRadius,_lightRadius);
+
+        _lightVisual.SetLightVisual(normalized);
     }
     private void LateUpdate()
     {

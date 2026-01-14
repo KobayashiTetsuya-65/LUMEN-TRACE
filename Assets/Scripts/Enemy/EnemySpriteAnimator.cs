@@ -20,11 +20,14 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("UŒ‚‚ÌŠÔŠu")] private float _attackFrame = 0.08f;
     [SerializeField, Tooltip("€–S‚ÌŠÔŠu")] private float _deadFrame = 0.15f;
     [SerializeField, Tooltip("ƒXƒP[ƒ‹")] private float _scale = 3f;
+    [SerializeField, Tooltip("ˆê‰ñ–Ú‚ÌUŒ‚”»’èƒtƒŒ[ƒ€")] private int _firstAttackFrame = 1;
+    [SerializeField, Tooltip("ˆê‰ñ–Ú‚ÌUŒ‚”»’è‚Ì‘±ƒtƒŒ[ƒ€”")] private int _sustainedFirstAttackFrame = 5;
 
     public bool IsLeftFacing { get; private set; } = true;
     public bool IsAttackFinished { get; private set; }
 
     private EnemyStateMachine _stateMachine;
+    private NormalEnemyController _controller;
 
     private EnemyState _prevState;
     private float _timer, _frameTime;
@@ -33,6 +36,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     private void Awake()
     {
         _stateMachine = GetComponent<EnemyStateMachine>();
+        _controller = GetComponent<NormalEnemyController>();
     }
     // Update is called once per frame
     void Update()
@@ -58,6 +62,17 @@ public class EnemySpriteAnimator : MonoBehaviour
             if (_stateMachine.CurrentState == EnemyState.Attack ||
                 _stateMachine.CurrentState == EnemyState.Dead)
             {
+                if(_stateMachine.CurrentState == EnemyState.Attack)
+                {
+                    if(_index == _firstAttackFrame)
+                    {
+                        _controller.Attack(true);
+                    }
+                    else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame)
+                    {
+                        _controller.Attack(false);
+                    }
+                }
                 _index++;
                 if (_index >= sprites.Length)
                 {

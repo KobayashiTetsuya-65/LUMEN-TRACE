@@ -24,7 +24,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("スケール")] private float _scale = 3f;
     [SerializeField, Tooltip("一回目の攻撃判定フレーム")] private int _firstAttackFrame = 1;
     [SerializeField, Tooltip("二回目の攻撃判定フレーム")] private int _secondAttackFrame = 5;
-    [SerializeField, Tooltip("攻撃判定の持続フレーム数")] private int _sustainedAttackFrame = 2;
+    [SerializeField, Tooltip("一回目の攻撃判定の持続フレーム数")] private int _sustainedFirstAttackFrame = 2;
+    [SerializeField, Tooltip("二回目の攻撃判定の持続フレーム数")] private int _sustainedSecondAttackFrame = 2;
 
 
     public bool IsRightFacing { get; private set; } = true;
@@ -76,8 +77,8 @@ public class PlayerSpriteAnimator : MonoBehaviour
                     {
                         _controller.Attack(true);
                     }
-                    else if(_index == _firstAttackFrame + _sustainedAttackFrame ||
-                        _index == _secondAttackFrame + _sustainedAttackFrame)
+                    else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame ||
+                        _index == _secondAttackFrame + _sustainedSecondAttackFrame)
                     {
                         _controller.Attack(false);
                     }

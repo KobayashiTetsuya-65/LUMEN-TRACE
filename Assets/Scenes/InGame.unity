@@ -348,6 +348,7 @@ MonoBehaviour:
   _attackCooldown: 2
   _flipDeadZone: 0.2
   _hitStopTime: 0.05
+  _enemyMaxHP: 5
   _normalRadius: 0.2
   _normalHeight: 0.6
 --- !u!114 &147273941
@@ -408,7 +409,7 @@ MonoBehaviour:
   _idleFrame: 0.15
   _walkFrame: 0.06
   _attackFrame: 0.08
-  _deadFrame: 0.15
+  _deadFrame: 0.08
   _scale: 3
   _firstAttackFrame: 3
   _sustainedFirstAttackFrame: 3
@@ -2319,6 +2320,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0c6bfffd5272f5458621fe5d52f2348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  _soundDataBase: {fileID: 0}
+  _bgmSource: {fileID: 0}
+  _seRoot: {fileID: 0}
+  _sePoolSize: 10
+  _mixer: {fileID: 0}
+  _seGroup: {fileID: 0}
 --- !u!114 &1474805537
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -85,6 +85,7 @@ public class EnemySpriteAnimator : MonoBehaviour
                     else
                     {
                         //€–Sˆ—
+                        _controller.Dead();
                     }
                 }
             }

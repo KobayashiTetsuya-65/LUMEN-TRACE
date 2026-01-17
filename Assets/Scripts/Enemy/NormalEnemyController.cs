@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class NormalEnemyController : MonoBehaviour,IEnemy
 {
+    public bool IsDead { get; private set; } = false;
+
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
     [SerializeField, Tooltip("中心")] private Transform _centerPoint;
@@ -54,6 +56,8 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
     void Update()
     {
+        if (IsDead) return;
+
         _target = _playerDetector.CurrentTarget;
         SearchPlayer();
 
@@ -75,6 +79,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     }
     private void FixedUpdate()
     {
+        if (IsDead) return;
         Move();
     }
     /// <summary>
@@ -136,9 +141,15 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         _currentHP -= 1;
         if(_currentHP <= 0)
         {
-            Destroy(gameObject);
+            IsDead = true;
+            _stateMachine.ChangeState(EnemyState.Dead);
         }
         Debug.Log("ダメージを与えた！");
+    }
+    public void Dead()
+    {
+        Debug.Log("倒した！！！");
+        Destroy(gameObject);
     }
     /// <summary>
     /// プレイヤーを探索し、発見したらターゲットする

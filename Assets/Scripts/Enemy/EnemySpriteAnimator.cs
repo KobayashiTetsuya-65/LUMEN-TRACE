@@ -36,7 +36,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     private void Awake()
     {
         _stateMachine = GetComponent<EnemyStateMachine>();
-        _controller = GetComponent<NormalEnemyController>();
+        _controller = GetComponentInChildren<NormalEnemyController>();
     }
     // Update is called once per frame
     void Update()
@@ -64,6 +64,13 @@ public class EnemySpriteAnimator : MonoBehaviour
             {
                 if(_stateMachine.CurrentState == EnemyState.Attack)
                 {
+                    if (_controller.IsDead)
+                    {
+                        _stateMachine.ChangeState(EnemyState.Dead);
+                        _index = 0;
+                        return;
+                    }
+
                     if(_index == _firstAttackFrame)
                     {
                         _controller.Attack(true);

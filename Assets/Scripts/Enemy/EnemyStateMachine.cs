@@ -9,7 +9,7 @@ public class EnemyStateMachine : MonoBehaviour
     private NormalEnemyController _controller;
     private void Awake()
     {
-        _controller = GetComponent<NormalEnemyController>();
+        _controller = GetComponentInChildren<NormalEnemyController>();
     }
     /// <summary>
     /// ó‘Ô‚ğØ‚è‘Ö‚¦‚ÄAØ‚è‘Ö‚¦‚Ìˆ—‚ğŒÄ‚Ô

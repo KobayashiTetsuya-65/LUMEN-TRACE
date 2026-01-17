@@ -10,6 +10,12 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
     [SerializeField, Tooltip("中心")] private Transform _centerPoint;
+    [SerializeField, Tooltip("体の判定")] private CapsuleCollider _col;
+    [SerializeField, Tooltip("親オブジェクト")] private Transform _tr;
+    [SerializeField] private EnemyStateMachine _stateMachine;
+    [SerializeField] private EnemySpriteAnimator _spriteAnimator;
+    [SerializeField] private EnemyPlayerDetector _playerDetector;
+    [SerializeField] private Rigidbody _rb;
 
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
@@ -24,13 +30,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.2f;
     [SerializeField, Tooltip("通常時の高さ")] private float _normalHeight = 0.6f;
 
-    private Transform _tr;
-    private Rigidbody _rb;
-    private CapsuleCollider _col;
-    private EnemyStateMachine _stateMachine;
-    private EnemySpriteAnimator _spriteAnimator;
     private EnemyLightSensor _lightSensor;
-    private EnemyPlayerDetector _playerDetector;
     private HitStopManager _hitStopManager;
     
     private Transform _target;
@@ -38,13 +38,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     private int _currentHP;
     void Start()
     {
-        _tr = transform;
-        _rb = GetComponent<Rigidbody>();
-        _col = GetComponent<CapsuleCollider>();
-        _stateMachine = GetComponent<EnemyStateMachine>();
-        _spriteAnimator = GetComponent<EnemySpriteAnimator>();
         _lightSensor = GetComponent<EnemyLightSensor>();
-        _playerDetector = GetComponentInChildren<EnemyPlayerDetector>();
         _hitStopManager = HitStopManager.Instance;
 
         _col.radius = _normalRadius;
@@ -142,6 +136,8 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         if(_currentHP <= 0)
         {
             IsDead = true;
+            _col.gameObject.SetActive(false);
+            _rb.useGravity = false;
             _stateMachine.ChangeState(EnemyState.Dead);
         }
         Debug.Log("ダメージを与えた！");
@@ -149,7 +145,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     public void Dead()
     {
         Debug.Log("倒した！！！");
-        Destroy(gameObject);
+        Destroy(_tr.gameObject);
     }
     /// <summary>
     /// プレイヤーを探索し、発見したらターゲットする

@@ -9,6 +9,7 @@ using UnityEngine.Rendering;
 public class PlayerController : LightSourceBase,IPlayer
 {
     public bool IsInvincible { get; private set; } = false;
+    public bool IsDead { get; private set; } = false;
 
     [Header("QÆ")]
     [SerializeField, Tooltip("UŒ‚”»’è")] private GameObject _attackCollider;
@@ -19,6 +20,7 @@ public class PlayerController : LightSourceBase,IPlayer
     [SerializeField, Tooltip("‰ñ”ğ‚ÌˆÚ“®‹——£")] private float _distanceTraveled = 2f;
     [SerializeField, Tooltip("’Êí‚ÌŒõŒ¹‚Ì”¼Œa")] private float _normalLightRadius = 10f;
     [SerializeField, Tooltip("‰B‚ê‚é‚ÌŒõŒ¹‚Ì”¼Œa")] private float _hideLightRadius = 3f;
+    [SerializeField, Tooltip("Å‘åHP")] private int _maxHP = 3;
 
     [Header("“–‚½‚è”»’è’²®")]
     [SerializeField, Tooltip("’Êí‚Ì”¼Œa")] private float _normalRadius = 0.14f;
@@ -36,6 +38,7 @@ public class PlayerController : LightSourceBase,IPlayer
 
     private Vector2 _moveInput;
     private bool _isAttack,_isDodge,_isHide;
+    private int _currentHP;
 
     void Start()
     {
@@ -51,12 +54,14 @@ public class PlayerController : LightSourceBase,IPlayer
         _dodgeAction = _playerInput.actions["Dodge"];
         _hideAction = _playerInput.actions["Hide"];
 
+        _currentHP = _maxHP;
         _attackCollider.SetActive(false);
     }
 
     // Update is called once per frame
     protected override void Update()
     {
+        if (IsDead) return;
         base.Update();
         PlayerInput();
         float normalized = Mathf.InverseLerp(_minRadius,_maxRadius,_lightRadius);
@@ -69,6 +74,7 @@ public class PlayerController : LightSourceBase,IPlayer
     }
     protected override void FixedUpdate()
     {
+        if (IsDead) return;
         base.FixedUpdate();
         PlayerMove();
     }
@@ -201,6 +207,12 @@ public class PlayerController : LightSourceBase,IPlayer
         }
         else
         {
+            _currentHP -= 1;
+            if(_currentHP <= 0)
+            {
+                IsDead = true;
+                GameManager.Instance.SceneMove("Title");
+            }
             Debug.Log("ƒ_ƒ[ƒW‚ğó‚¯‚½");
         }
     }

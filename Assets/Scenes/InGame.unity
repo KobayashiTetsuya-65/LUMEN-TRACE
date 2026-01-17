@@ -752,7 +752,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 40
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -841,7 +841,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Camera
   _target: {fileID: 1950673312}
-  _offset: {x: 0, y: 4.5, z: -9}
+  _offset: {x: 5, y: 4.5, z: -7}
+  _playerTr: {fileID: 1950673312}
   _followSpeed: 2
 --- !u!1 &338157761 stripped
 GameObject:
@@ -1231,9 +1232,21 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 662194078688571942, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 662194078742752517, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 662194078742752523, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 662194079806578565, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 662194079806578567, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1246,6 +1259,10 @@ PrefabInstance:
     - target: {fileID: 662194079987900357, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 662194079987900363, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 662194080299492528, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
       propertyPath: m_StaticEditorFlags

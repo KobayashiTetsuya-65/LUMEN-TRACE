@@ -16,6 +16,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField, Tooltip("攻撃クールタイム")] private float _attackCooldown = 0.5f;
     [SerializeField, Tooltip("反転しない距離")] private float _flipDeadZone = 0.1f;
     [SerializeField, Tooltip("ヒットストップ時間")] private float _hitStopTime = 0.05f;
+    [SerializeField, Tooltip("HP")] private int _enemyMaxHP = 5;
 
     [Header("当たり判定調整")]
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.2f;
@@ -32,7 +33,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     
     private Transform _target;
     private float _lastAttackTime;
-
+    private int _currentHP;
     void Start()
     {
         _tr = transform;
@@ -46,6 +47,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         _col.radius = _normalRadius;
         _col.height = _normalHeight;
+        _currentHP = _enemyMaxHP;
 
         _attackCollider.SetActive(false);
     }
@@ -131,6 +133,11 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     public void Damaged()
     {
         _hitStopManager.RequestHitStop(_hitStopTime);
+        _currentHP -= 1;
+        if(_currentHP <= 0)
+        {
+            Destroy(gameObject);
+        }
         Debug.Log("ダメージを与えた！");
     }
     /// <summary>

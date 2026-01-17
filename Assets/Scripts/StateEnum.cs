@@ -19,3 +19,10 @@ public enum EnemyState
     Attack,
     Dead
 }
+/// <summary>
+/// “G‚ÌŽí—Þ
+/// </summary>
+public enum EnemyType
+{
+    Normal,
+}

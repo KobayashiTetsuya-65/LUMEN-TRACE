@@ -11,7 +11,7 @@ public class ClearPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            _gameManager.SceneMove("Title");
+            _gameManager.SceneMove(SceneName.Title);
         }
     }
 }

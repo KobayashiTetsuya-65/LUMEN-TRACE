@@ -30,6 +30,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField, Tooltip("í èÌéûÇÃîºåa")] private float _normalRadius = 0.2f;
     [SerializeField, Tooltip("í èÌéûÇÃçÇÇ≥")] private float _normalHeight = 0.6f;
 
+    private AudioManager _audioManager;
     private EnemyLightSensor _lightSensor;
     private HitStopManager _hitStopManager;
     
@@ -40,6 +41,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     {
         _lightSensor = GetComponent<EnemyLightSensor>();
         _hitStopManager = HitStopManager.Instance;
+        _audioManager = AudioManager.Instance;
 
         _col.radius = _normalRadius;
         _col.height = _normalHeight;
@@ -132,6 +134,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     public void Damaged()
     {
         _hitStopManager.RequestHitStop(_hitStopTime);
+        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
         _currentHP -= 1;
         if(_currentHP <= 0)
         {

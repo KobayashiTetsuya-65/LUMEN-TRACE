@@ -4,7 +4,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SceneMoveButton : MonoBehaviour
 {
-    [SerializeField, Tooltip("移行先のシーン")] private string _sceneName;
+    [SerializeField, Tooltip("移行先のシーン")] private SceneName _sceneName;
 
     Button _button;
     // Start is called once before the first execution of Update after the MonoBehaviour is created

@@ -26,3 +26,11 @@ public enum EnemyType
 {
     Normal,
 }
+/// <summary>
+/// ƒV[ƒ“‚Ì–¼‘O
+/// </summary>
+public enum SceneName
+{
+    Title,
+    InGame
+}

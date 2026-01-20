@@ -119,4 +119,18 @@ public class AudioManager : MonoBehaviour
         source.gameObject.SetActive(false);
         _seAudioSourcePools.Enqueue(source);
     }
+    /// <summary>
+    /// 指定シーンのBGMキーを返す
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <returns></returns>
+    public string ReturnBGMKey(SceneName scene)
+    {
+        return scene switch
+        {
+            SceneName.Title => SoundDataUtility.KeyConfig.Bgm.Title,
+            SceneName.InGame => SoundDataUtility.KeyConfig.Bgm.InGame,
+            _ => null
+        };
+    }
 }

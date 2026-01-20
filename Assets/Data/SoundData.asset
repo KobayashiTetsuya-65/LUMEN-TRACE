@@ -12,4 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 577152bdc3a280241867158327c1b754, type: 3}
   m_Name: SoundData
   m_EditorClassIdentifier: Assembly-CSharp::SoundDataBase
-  _soundMap: []
+  _soundMap:
+  - _key: Title
+    _type: 0
+    _isLoop: 1
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: b8d4dc5db0f1d3544bc0d70868d65cc2, type: 3}
+  - _key: InGame
+    _type: 0
+    _isLoop: 1
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: dc65363b65f2812498cba10bf0c1050b, type: 3}
+  - _key: PlayerAttack
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 454147e617d8843439606577b02f22aa, type: 3}
+  - _key: EnemyAttack
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 83e77ce8709d52045bdc774ff599042b, type: 3}
+  - _key: AttackHit
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 487245bf3b629774aa278fe2ff8815ae, type: 3}
+  - _key: Dodge
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 26dd1c0dbd80ed04aa3f8d4d1d9f16e8, type: 3}
+  - _key: Hide
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 75705bf1583bd9641af18c7f9b182f60, type: 3}
+  - _key: Damage
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 487245bf3b629774aa278fe2ff8815ae, type: 3}

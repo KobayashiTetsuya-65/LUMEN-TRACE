@@ -36,6 +36,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
 
     private PlayerStateMachine _stateMachine;
     private PlayerController _controller;
+    private AudioManager _audioManager;
 
     private PlayerState _prevState;
     private float _timer, _frameTime;
@@ -45,6 +46,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
     {
         _stateMachine = GetComponent<PlayerStateMachine>();
         _controller = GetComponent<PlayerController>();
+        _audioManager = AudioManager.Instance;
     }
 
     // Update is called once per frame
@@ -77,6 +79,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
                     if(_index == _firstAttackFrame ||
                         _index == _secondAttackFrame)
                     {
+                        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.PlayerAttack);
                         _controller.Attack(true);
                     }
                     else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame ||
@@ -89,6 +92,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
                 {
                     if(_index == _startDodgeFrame)
                     {
+                        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Dodge);
                         _controller.ChangeInvincibleState(true);
                     }
                     else if(_index == _startDodgeFrame + _sustainedDodgeFrame)
@@ -111,6 +115,7 @@ public class PlayerSpriteAnimator : MonoBehaviour
                 {
                     if(_index == _startHideFrame)
                     {
+                        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Hide);
                         _controller.Hide(true);
                     }
 

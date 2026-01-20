@@ -29,6 +29,7 @@ public class PlayerController : LightSourceBase,IPlayer
     [SerializeField, Tooltip("ö•š‚Ì”¼Œa”{—¦")] private float _hideRadiusMag = 0.8f;
     [SerializeField, Tooltip("ö•š‚Ì‚‚³”{—¦")] private float _hideHeightMag = 0.35f;
 
+    private AudioManager _audioManager;
     private Rigidbody _rb;
     private CapsuleCollider _col;
     private PlayerInput _playerInput;
@@ -48,6 +49,7 @@ public class PlayerController : LightSourceBase,IPlayer
         _col = GetComponent<CapsuleCollider>();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _spriteAnimator = GetComponent<PlayerSpriteAnimator>();
+        _audioManager = AudioManager.Instance;
 
         _moveAction = _playerInput.actions["Move"];
         _attackAction = _playerInput.actions["Attack"];
@@ -207,11 +209,12 @@ public class PlayerController : LightSourceBase,IPlayer
         }
         else
         {
+            _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
             _currentHP -= 1;
             if(_currentHP <= 0)
             {
                 IsDead = true;
-                GameManager.Instance.SceneMove("Title");
+                GameManager.Instance.SceneMove(SceneName.Title);
             }
             Debug.Log("ƒ_ƒ[ƒW‚ğó‚¯‚½");
         }

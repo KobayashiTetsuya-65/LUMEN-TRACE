@@ -26,6 +26,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("一回目の攻撃判定フレーム")] private int _firstAttackFrame = 4;
     [SerializeField, Tooltip("一回目の攻撃判定の持続フレーム数")] private int _sustainedFirstAttackFrame = 5;
 
+    private AudioManager _audioManager;
     private EnemyStateMachine _stateMachine;
     private NormalEnemyController _controller;
 
@@ -37,6 +38,10 @@ public class EnemySpriteAnimator : MonoBehaviour
     {
         _stateMachine = GetComponent<EnemyStateMachine>();
         _controller = GetComponentInChildren<NormalEnemyController>();
+    }
+    private void Start()
+    {
+        _audioManager = AudioManager.Instance;
     }
     // Update is called once per frame
     void Update()
@@ -73,6 +78,7 @@ public class EnemySpriteAnimator : MonoBehaviour
 
                     if(_index == _firstAttackFrame)
                     {
+                        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.EnemyAttack);
                         _controller.Attack(true);
                     }
                     else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame)

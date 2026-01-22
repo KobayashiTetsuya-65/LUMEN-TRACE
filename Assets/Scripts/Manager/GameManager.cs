@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private AudioManager _audioManager;
 
-    private bool _isPlayingBGM = false;
+    private bool _isPlayingBGM = false,_first = false;
     private void Awake()
     {
         if(Instance != null)
@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
     {
         if (!_isPlayingBGM)
         {
+            if (!_first)
+            {
+                _audioManager.CreateAudioSource();
+                _first = true;
+            }
+
             _audioManager.PlayBGM(_audioManager.ReturnBGMKey(CurrentScene));
             _isPlayingBGM = true;
         }

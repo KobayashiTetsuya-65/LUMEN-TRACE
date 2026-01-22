@@ -29,6 +29,10 @@ public class AudioManager : MonoBehaviour
     
     void Start()
     {
+        
+    }
+    public void CreateAudioSource()
+    {
         if (_seRoot == null)
         {
             _seRoot = transform;
@@ -45,7 +49,6 @@ public class AudioManager : MonoBehaviour
             _seAudioSourcePools.Enqueue(audioSource);
         }
     }
-
     public void PlayBGM(string key)
     {
         StopBGM();
@@ -115,6 +118,7 @@ public class AudioManager : MonoBehaviour
     }
     private IEnumerator ReturnToPoolAfterPlaying(AudioSource source)
     {
+        if (source == null)yield break;
         yield return new WaitWhile(() => source.isPlaying);
         source.gameObject.SetActive(false);
         _seAudioSourcePools.Enqueue(source);

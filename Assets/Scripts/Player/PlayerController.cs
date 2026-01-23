@@ -11,6 +11,8 @@ public class PlayerController : LightSourceBase,IPlayer
     public bool IsInvincible { get; private set; } = false;
     public bool IsDead { get; private set; } = false;
 
+    public bool IsMovie = true;
+
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
     [SerializeField, Tooltip("足元のライト")] private PlayerLightVisual _lightVisual;
@@ -65,10 +67,11 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         if (IsDead) return;
         base.Update();
-        PlayerInput();
         float normalized = Mathf.InverseLerp(_minRadius,_maxRadius,_lightRadius);
-
         _lightVisual.SetLightVisual(normalized);
+
+        if (IsMovie) return;
+        PlayerInput();
     }
     private void LateUpdate()
     {
@@ -218,5 +221,10 @@ public class PlayerController : LightSourceBase,IPlayer
             }
             Debug.Log("ダメージを受けた");
         }
+    }
+
+    public void FinishMovie()
+    {
+        IsMovie = false;
     }
 }

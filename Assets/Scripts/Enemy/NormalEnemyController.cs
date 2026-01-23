@@ -6,6 +6,7 @@ using UnityEngine;
 public class NormalEnemyController : MonoBehaviour,IEnemy
 {
     public bool IsDead { get; private set; } = false;
+    public bool IsMovie = false;
 
     [Header("éQè∆")]
     [SerializeField, Tooltip("çUåÇîªíË")] private GameObject _attackCollider;
@@ -47,6 +48,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         _col.height = _normalHeight;
         _currentHP = _enemyMaxHP;
 
+        IsMovie = false;
         _attackCollider.SetActive(false);
     }
 
@@ -56,6 +58,8 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         _target = _playerDetector.CurrentTarget;
         SearchPlayer();
+
+        if(IsMovie) return;
 
         if (_stateMachine.CurrentState == EnemyState.Attack)
         {
@@ -164,5 +168,16 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         bool isLeft = _target.position.x < _tr.position.x;
         _spriteAnimator.ChangeSpriteFlipX(isLeft);
+    }
+
+    public void FinishMovie()
+    {
+        IsMovie = false;
+        Destroy(_tr.gameObject);
+    }
+
+    public void StartMovie()
+    {
+        IsMovie = true;
     }
 }

@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public SceneName CurrentScene { get; private set; }
 
+    public bool IsMovie { get; private set; } = false;
+
     [SerializeField] private SceneName _startSceneName = SceneName.Title;
 
     private AudioManager _audioManager;
@@ -38,8 +40,11 @@ public class GameManager : MonoBehaviour
             if (!_first)
             {
                 _audioManager.CreateAudioSource();
+                if (_startSceneName == SceneName.InGame) IsMovie = true;
                 _first = true;
             }
+
+            if (IsMovie) return;
 
             _audioManager.PlayBGM(_audioManager.ReturnBGMKey(CurrentScene));
             _isPlayingBGM = true;
@@ -59,5 +64,16 @@ public class GameManager : MonoBehaviour
             SceneName.InGame => "InGame",
             _ => null
         };
+    }
+
+    public void FinishMovie()
+    {
+        IsMovie = false;
+    }
+
+    public void StartMovie()
+    {
+        IsMovie = true;
+        _audioManager.StopBGM();
     }
 }

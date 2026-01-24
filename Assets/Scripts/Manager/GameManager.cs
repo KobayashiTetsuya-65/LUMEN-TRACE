@@ -76,4 +76,9 @@ public class GameManager : MonoBehaviour
         IsMovie = true;
         _audioManager.StopBGM();
     }
+
+    public void ClearGame()
+    {
+        SceneMove(SceneName.Title);
+    }
 }

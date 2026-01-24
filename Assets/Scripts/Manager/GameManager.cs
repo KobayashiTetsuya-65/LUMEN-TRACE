@@ -24,12 +24,12 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         Application.targetFrameRate = 60;
-        CurrentScene = _startSceneName;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _audioManager = AudioManager.Instance;
+        CurrentScene = _startSceneName;
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             if (!_first)
             {
                 _audioManager.CreateAudioSource();
-                if (_startSceneName == SceneName.InGame) IsMovie = true;
+                if (CurrentScene == SceneName.InGame) IsMovie = true;
                 _first = true;
             }
 
@@ -52,9 +52,11 @@ public class GameManager : MonoBehaviour
     }
     public void SceneMove(SceneName scene)
     {
-        SceneManager.LoadScene(SceneStringName(scene));
         CurrentScene = scene;
         _isPlayingBGM = false;
+        _first = false;
+        _audioManager.StopBGM();
+        SceneManager.LoadScene(SceneStringName(scene));
     }
     private string SceneStringName(SceneName scene)
     {
@@ -69,6 +71,8 @@ public class GameManager : MonoBehaviour
     public void FinishMovie()
     {
         IsMovie = false;
+        _isPlayingBGM = false;
+        Debug.Log("ゲーム開始！！！");
     }
 
     public void StartMovie()

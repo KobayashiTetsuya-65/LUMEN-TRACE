@@ -45,7 +45,6 @@ public class PlayerController : LightSourceBase,IPlayer
 
     void Start()
     {
-        _tr = transform;
         _playerInput = GetComponent<PlayerInput>();
         _rb = GetComponent<Rigidbody>();
         _col = GetComponent<CapsuleCollider>();
@@ -81,6 +80,8 @@ public class PlayerController : LightSourceBase,IPlayer
     {
         if (IsDead) return;
         base.FixedUpdate();
+
+        if(IsMovie) return;
         PlayerMove();
     }
     /// <summary>
@@ -226,5 +227,12 @@ public class PlayerController : LightSourceBase,IPlayer
     public void FinishMovie()
     {
         IsMovie = false;
+    }
+
+    public void StartMovie()
+    {
+        IsMovie = true;
+        _rb.linearVelocity = Vector3.zero;
+        _stateMachine.ChangeState(PlayerState.Idle);
     }
 }

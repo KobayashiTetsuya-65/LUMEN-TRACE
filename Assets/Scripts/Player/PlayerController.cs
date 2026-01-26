@@ -38,7 +38,7 @@ public class PlayerController : LightSourceBase,IPlayer
     private InputAction _moveAction,_attackAction,_dodgeAction,_hideAction,_interactAction;
     private PlayerStateMachine _stateMachine;
     private PlayerSpriteAnimator _spriteAnimator;
-    private LightSourceGimmick _lightGimmick;
+    private IInteractable _lightGimmick;
 
     private Vector2 _moveInput;
     private bool _isAttack,_isDodge,_isHide,_isInteract;
@@ -88,15 +88,18 @@ public class PlayerController : LightSourceBase,IPlayer
     }
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent<LightSourceGimmick>(out var gimmick))
+        if(other.TryGetComponent<IInteractable>(out var gimmick))
         {
             _lightGimmick = gimmick;
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if(_lightGimmick != null)
-            _lightGimmick = null;
+        if(other.TryGetComponent<IInteractable>(out var gimmick))
+        {
+            if(_lightGimmick == gimmick)
+                _lightGimmick = null;
+        }  
     }
     /// <summary>
     /// プレイヤー挙動
@@ -133,7 +136,7 @@ public class PlayerController : LightSourceBase,IPlayer
         _isAttack = _attackAction.WasPressedThisFrame();
         _isDodge = _dodgeAction.WasPressedThisFrame();
         _isHide = _hideAction.IsPressed();
-        _isInteract = _interactAction.WasPressedThisFrame();
+        _isInteract = _interactAction.IsPressed();
 
         //ステート管理
         if(_isAttack && _stateMachine.CurrentState != PlayerState.Attack)
@@ -246,10 +249,7 @@ public class PlayerController : LightSourceBase,IPlayer
 
     private void TryInteract()
     {
-        if(_lightGimmick != null)
-        {
-            _lightGimmick.Interact();
-        }
+        _lightGimmick?.Interact();
     }
 
     public void FinishMovie()

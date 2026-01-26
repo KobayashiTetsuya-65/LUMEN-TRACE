@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LightSourceGimmick : LightSourceBase,ILightAffectable
+public class LightSourceGimmick : LightSourceBase,ILightAffectable,IInteractable
 {
     [Header("éQè∆")]
     [SerializeField] private GameObject _particle;

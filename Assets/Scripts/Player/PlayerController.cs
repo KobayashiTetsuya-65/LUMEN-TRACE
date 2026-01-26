@@ -35,12 +35,13 @@ public class PlayerController : LightSourceBase,IPlayer
     private Rigidbody _rb;
     private CapsuleCollider _col;
     private PlayerInput _playerInput;
-    private InputAction _moveAction,_attackAction,_dodgeAction,_hideAction;
+    private InputAction _moveAction,_attackAction,_dodgeAction,_hideAction,_interactAction;
     private PlayerStateMachine _stateMachine;
     private PlayerSpriteAnimator _spriteAnimator;
+    private LightSourceGimmick _lightGimmick;
 
     private Vector2 _moveInput;
-    private bool _isAttack,_isDodge,_isHide;
+    private bool _isAttack,_isDodge,_isHide,_isInteract;
     private int _currentHP;
 
     void Start()
@@ -56,6 +57,7 @@ public class PlayerController : LightSourceBase,IPlayer
         _attackAction = _playerInput.actions["Attack"];
         _dodgeAction = _playerInput.actions["Dodge"];
         _hideAction = _playerInput.actions["Hide"];
+        _interactAction = _playerInput.actions["Interact"];
 
         _currentHP = _maxHP;
         _attackCollider.SetActive(false);
@@ -83,6 +85,18 @@ public class PlayerController : LightSourceBase,IPlayer
 
         if(IsMovie) return;
         PlayerMove();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.TryGetComponent<LightSourceGimmick>(out var gimmick))
+        {
+            _lightGimmick = gimmick;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if(_lightGimmick != null)
+            _lightGimmick = null;
     }
     /// <summary>
     /// プレイヤー挙動
@@ -119,6 +133,7 @@ public class PlayerController : LightSourceBase,IPlayer
         _isAttack = _attackAction.WasPressedThisFrame();
         _isDodge = _dodgeAction.WasPressedThisFrame();
         _isHide = _hideAction.IsPressed();
+        _isInteract = _interactAction.WasPressedThisFrame();
 
         //ステート管理
         if(_isAttack && _stateMachine.CurrentState != PlayerState.Attack)
@@ -151,6 +166,11 @@ public class PlayerController : LightSourceBase,IPlayer
 
         if (_stateMachine.CurrentState == PlayerState.Attack
             || _stateMachine.CurrentState == PlayerState.Dodge) return;
+
+        if (_isInteract)
+        {
+            TryInteract();
+        }
 
         if (_moveInput.magnitude > 0.1f)
         {
@@ -221,6 +241,14 @@ public class PlayerController : LightSourceBase,IPlayer
                 GameManager.Instance.SceneMove(SceneName.Title);
             }
             Debug.Log("ダメージを受けた");
+        }
+    }
+
+    private void TryInteract()
+    {
+        if(_lightGimmick != null)
+        {
+            _lightGimmick.Interact();
         }
     }
 

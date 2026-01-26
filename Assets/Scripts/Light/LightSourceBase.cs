@@ -13,7 +13,6 @@ public abstract class LightSourceBase : MonoBehaviour
     [SerializeField] protected float _lightPower = 1f;
     [SerializeField] protected float _radiusChangeSpeed = 5f;
 
-
     protected Transform _tr;
     protected float _targetRadius;
     protected virtual void Awake()

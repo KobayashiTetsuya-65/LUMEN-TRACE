@@ -47,5 +47,6 @@ public class EventManager : MonoBehaviour
         _director.Evaluate(); // ã≠êßîΩâf
         _director.Stop();
         FinishMovie();
+        _skipAction.Disable();
     }
 }

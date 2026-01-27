@@ -1,11 +1,12 @@
+using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public SceneName CurrentScene { get; private set; }
+    public IUIManager CurrentUIManager { get; private set; }
 
     public bool IsMovie { get; private set; } = false;
 
@@ -52,6 +53,11 @@ public class GameManager : MonoBehaviour
     }
     public void SceneMove(SceneName scene)
     {
+        CurrentUIManager.FadePanel(true,scene);
+    }
+
+    public void ChangeScene(SceneName scene)
+    {
         CurrentScene = scene;
         _isPlayingBGM = false;
         _first = false;
@@ -84,5 +90,10 @@ public class GameManager : MonoBehaviour
     public void ClearGame()
     {
         SceneMove(SceneName.Title);
+    }
+
+    public void RegisterUIManager(IUIManager manager)
+    {
+        CurrentUIManager = manager;
     }
 }

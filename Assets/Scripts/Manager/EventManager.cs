@@ -29,11 +29,13 @@ public class EventManager : MonoBehaviour
     public void StartMovie()
     {
         _gameManager.StartMovie();
+        _skipAction.Enable();
     }
 
     public void FinishMovie()
     {
         _gameManager.FinishMovie();
+        _skipAction.Disable();
     }
 
     public void ClearGame()
@@ -47,6 +49,5 @@ public class EventManager : MonoBehaviour
         _director.Evaluate(); // ã≠êßîΩâf
         _director.Stop();
         FinishMovie();
-        _skipAction.Disable();
     }
 }

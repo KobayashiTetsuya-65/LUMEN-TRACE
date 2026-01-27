@@ -22,6 +22,7 @@ public class PlayerController : LightSourceBase,IPlayer
     [SerializeField, Tooltip("‰ñ”ğ‚ÌˆÚ“®‹——£")] private float _distanceTraveled = 2f;
     [SerializeField, Tooltip("’Êí‚ÌŒõŒ¹‚Ì”¼Œa")] private float _normalLightRadius = 10f;
     [SerializeField, Tooltip("‰B‚ê‚é‚ÌŒõŒ¹‚Ì”¼Œa")] private float _hideLightRadius = 3f;
+    [SerializeField, Tooltip("–¾‚é‚³‚Ì•â³’l")] private float _lightAdjustmentValue = 2f;
     [SerializeField, Tooltip("Å‘åHP")] private int _maxHP = 3;
 
     [Header("“–‚½‚è”»’è’²®")]
@@ -218,7 +219,7 @@ public class PlayerController : LightSourceBase,IPlayer
     }
     public void Hide(bool toHide)
     {
-        float radius = toHide ? _hideLightRadius : _normalLightRadius;
+        float radius = toHide ? _hideLightRadius : ((_currentHP + _lightAdjustmentValue) / (_maxHP + _lightAdjustmentValue)) * _normalLightRadius;
         ChangeLightRadius(radius);
     }
     public void ChangeInvincibleState(bool toInvincible)
@@ -238,6 +239,7 @@ public class PlayerController : LightSourceBase,IPlayer
         {
             _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
             _currentHP -= 1;
+            ChangeLightRadius(((_currentHP + _lightAdjustmentValue) / (_maxHP + _lightAdjustmentValue)) * _normalLightRadius);
             if(_currentHP <= 0)
             {
                 IsDead = true;

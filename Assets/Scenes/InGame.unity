@@ -10179,12 +10179,17 @@ MonoBehaviour:
   IsMovie: 1
   _attackCollider: {fileID: 1951966104}
   _lightVisual: {fileID: 1950673320}
+  _nightVolume: {fileID: 832575518}
   _speed: 4
   _distanceTraveled: 1
   _normalLightRadius: 10
   _hideLightRadius: 3
   _lightAdjustmentValue: 1
   _maxHP: 3
+  _intensityIncrease: 0.12
+  _damageDuration: 0.4
+  _targetPostExposure: -8
+  _deadEffectDuration: 1.2
   _normalRadius: 0.14
   _normalHeight: 0.4
   _dodgeHeightMag: 0.8

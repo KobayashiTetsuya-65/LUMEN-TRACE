@@ -1,5 +1,3 @@
-using System.IO.Compression;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerSpriteAnimator : MonoBehaviour

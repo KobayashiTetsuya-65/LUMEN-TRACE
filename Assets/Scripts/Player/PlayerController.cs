@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Playables;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 /// <summary>
 /// プレイヤーの行動制御
 /// </summary>
@@ -16,6 +17,7 @@ public class PlayerController : LightSourceBase,IPlayer
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
     [SerializeField, Tooltip("足元のライト")] private PlayerLightVisual _lightVisual;
+    [SerializeField, Tooltip("夜の演出")] private Volume _nightVolume;
 
     [Header("数値設定")]
     [SerializeField, Tooltip("移動速度")] private float _speed = 2.0f;
@@ -24,6 +26,10 @@ public class PlayerController : LightSourceBase,IPlayer
     [SerializeField, Tooltip("隠れる時の光源の半径")] private float _hideLightRadius = 3f;
     [SerializeField, Tooltip("明るさの補正値")] private float _lightAdjustmentValue = 2f;
     [SerializeField, Tooltip("最大HP")] private int _maxHP = 3;
+    [SerializeField, Tooltip("被ダメ演出の効果量")] private float _intensityIncrease = 0.1f;
+    [SerializeField, Tooltip("被ダメ演出の時間")] private float _damageDuration = 0.4f;
+    [SerializeField, Tooltip("死亡演出の暗転度")] private float _targetPostExposure = -8f;
+    [SerializeField, Tooltip("死亡時演出時間")] private float _deadEffectDuration = 1.0f;
 
     [Header("当たり判定調整")]
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.14f;
@@ -39,11 +45,14 @@ public class PlayerController : LightSourceBase,IPlayer
     private InputAction _moveAction,_attackAction,_dodgeAction,_hideAction,_interactAction;
     private PlayerStateMachine _stateMachine;
     private PlayerSpriteAnimator _spriteAnimator;
+    private Vignette _vignette;
+    private ColorAdjustments _colorAdjust;
     private IInteractable _lightGimmick;
 
     private Vector2 _moveInput;
     private bool _isAttack,_isDodge,_isHide,_isInteract;
     private int _currentHP;
+    private float _startIntensity;
 
     void Start()
     {
@@ -60,6 +69,11 @@ public class PlayerController : LightSourceBase,IPlayer
         _hideAction = _playerInput.actions["Hide"];
         _interactAction = _playerInput.actions["Interact"];
 
+        if(_nightVolume.profile.TryGet(out _vignette))
+        {
+            _startIntensity = _vignette.intensity.value;
+        }
+        _nightVolume.profile.TryGet(out _colorAdjust);
         _currentHP = _maxHP;
         _attackCollider.SetActive(false);
     }
@@ -239,13 +253,18 @@ public class PlayerController : LightSourceBase,IPlayer
         {
             _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
             _currentHP -= 1;
-            ChangeLightRadius(((_currentHP + _lightAdjustmentValue) / (_maxHP + _lightAdjustmentValue)) * _normalLightRadius);
+            
             if(_currentHP <= 0)
             {
                 IsDead = true;
-                GameManager.Instance.SceneMove(SceneName.Title);
+                DeadEffect();
             }
-            Debug.Log("ダメージを受けた");
+            else
+            {
+                ChangeLightRadius(((_currentHP + _lightAdjustmentValue) / (_maxHP + _lightAdjustmentValue)) * _normalLightRadius);
+                DamageEffect();
+            }
+                Debug.Log("ダメージを受けた");
         }
     }
 
@@ -264,5 +283,64 @@ public class PlayerController : LightSourceBase,IPlayer
         IsMovie = true;
         _rb.linearVelocity = Vector3.zero;
         _stateMachine.ChangeState(PlayerState.Idle);
+    }
+
+    private void DamageEffect()
+    {
+        StopAllCoroutines();
+        StartCoroutine(DamageVignetteEffect());
+    }
+
+    private IEnumerator DamageVignetteEffect()
+    {
+        float target = _startIntensity + (_intensityIncrease * (_maxHP - _currentHP));
+        float t = 0f;
+
+        while (t < _damageDuration)
+        {
+            t += Time.deltaTime;
+            _vignette.intensity.value = Mathf.Lerp(_startIntensity, target, t / _damageDuration);
+            yield return null;
+        }
+
+        t = 0f;
+
+        // 元に戻す
+        while (t < _damageDuration)
+        {
+            t += Time.deltaTime;
+            _vignette.intensity.value = Mathf.Lerp(target, _startIntensity, t / _damageDuration);
+            yield return null;
+        }
+    }
+
+    private void DeadEffect()
+    {
+        _audioManager.StopBGM();
+        _stateMachine.ChangeState(PlayerState.Idle);
+        StopAllCoroutines();
+        StartCoroutine(DeadBlackoutEffect());
+    }
+
+    private IEnumerator DeadBlackoutEffect()
+    {
+        IsMovie = true;
+        _rb.linearVelocity = Vector3.zero;
+
+        float t = 0f;
+        float start = _colorAdjust.postExposure.value;
+
+        while (t < _deadEffectDuration)
+        {
+            t += Time.deltaTime;
+            _colorAdjust.postExposure.value = Mathf.Lerp(start, _targetPostExposure, t / _deadEffectDuration);
+            yield return null;
+        }
+
+        _colorAdjust.postExposure.value = _targetPostExposure;
+
+        yield return new WaitForSeconds(0.5f); // 少し余韻
+
+        GameManager.Instance.SceneMove(SceneName.Title);
     }
 }

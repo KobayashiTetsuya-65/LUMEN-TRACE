@@ -7,6 +7,7 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
     [SerializeField, Tooltip("表示する画像")] private GameObject _obj;
     [SerializeField, Tooltip("移行先のシーン")] private SceneName _sceneName;
 
+    AudioManager _audioManager;
     Button _button;
     private void Awake()
     {
@@ -15,6 +16,7 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _audioManager = AudioManager.Instance;
         _button = GetComponent<Button>();
         _button.onClick.AddListener(SceneChange);
     }
@@ -27,7 +29,8 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
     {
         // 色変更・拡大・SE
         _obj.SetActive(true);
-        Debug.Log($"{name} + が選択された");
+        if(_audioManager == null) _audioManager = AudioManager.Instance;
+        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Select);
     }
 
     public void OnDeselect()
@@ -38,7 +41,8 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
 
     public void OnSubmit()
     {
+        if (_audioManager == null) _audioManager = AudioManager.Instance;
+        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Submit);
         SceneChange();
-        Debug.Log("決定！");
     }
 }

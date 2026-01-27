@@ -12,6 +12,8 @@ public static class SoundDataUtility
             public static readonly string Damage = "Damage";
             public static readonly string Dodge = "Dodge";
             public static readonly string Hide = "Hide";
+            public static readonly string Select = "Select";
+            public static readonly string Submit = "Submit";
         }
         public static class Bgm
         {

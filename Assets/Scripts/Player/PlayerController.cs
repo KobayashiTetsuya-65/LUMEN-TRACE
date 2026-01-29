@@ -63,6 +63,7 @@ public class PlayerController : LightSourceBase,IPlayer
         _spriteAnimator = GetComponent<PlayerSpriteAnimator>();
         _audioManager = AudioManager.Instance;
 
+        _playerInput.SwitchCurrentActionMap("Player");
         _moveAction = _playerInput.actions["Move"];
         _attackAction = _playerInput.actions["Attack"];
         _dodgeAction = _playerInput.actions["Dodge"];

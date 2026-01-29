@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     
     void Start()
     {
-        
+        LoadVolume();
     }
     public void CreateAudioSource()
     {
@@ -136,5 +136,12 @@ public class AudioManager : MonoBehaviour
             SceneName.InGame => SoundDataUtility.KeyConfig.Bgm.InGame,
             _ => null
         };
+    }
+
+    public void SetVolume(string param, float value)
+    {
+        float dB = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f;
+        _mixer.SetFloat(param, dB);
+        PlayerPrefs.SetFloat(param, value);
     }
 }

@@ -33,11 +33,12 @@ public class EnemyManager : MonoBehaviour
             case EnemyType.Normal:
                 if(_enemyPool.TryDequeue(out GameObject enemy))
                 {
-
+                    enemy.SetActive(true);
                 }
                 else
                 {
-
+                    GameObject newEnemy = Instantiate(_normalEnemy);
+                    _enemyPool.Enqueue(enemy);
                 }
                     break;
         }

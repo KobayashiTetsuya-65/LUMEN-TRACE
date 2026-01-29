@@ -33,12 +33,14 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     private AudioManager _audioManager;
     private EnemyLightSensor _lightSensor;
     private HitStopManager _hitStopManager;
+    private PlayerController _playerController;
     
     private Transform _target;
     private float _lastAttackTime;
     private int _currentHP;
     void Start()
     {
+        _playerController = FindAnyObjectByType<PlayerController>();
         _lightSensor = GetComponent<EnemyLightSensor>();
         _hitStopManager = HitStopManager.Instance;
         _audioManager = AudioManager.Instance;
@@ -158,7 +160,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     /// </summary>
     public void SearchPlayer()
     {
-        if (_target == null) return;
+        if (_target == null || !_playerController.IsDead) return;
 
         float diff = _target.position.x - _tr.position.x;
 

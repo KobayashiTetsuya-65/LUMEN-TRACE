@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &664930685280416257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6535094169942738331}
+  m_Layer: 10
+  m_Name: Ray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6535094169942738331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664930685280416257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.22, z: 0.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5867751762858939547}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1384601112839481819
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +42,7 @@ GameObject:
   - component: {fileID: 243426599845052152}
   - component: {fileID: 5116854556141631377}
   - component: {fileID: 5752676361756092752}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DetectionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +110,7 @@ GameObject:
   - component: {fileID: 4401618440157642323}
   - component: {fileID: 6347076188438230579}
   - component: {fileID: 6211430165219755872}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +134,7 @@ Transform:
   - {fileID: 4041836076078520964}
   - {fileID: 1359576873655015379}
   - {fileID: 6440591815665387948}
+  - {fileID: 6535094169942738331}
   m_Father: {fileID: 3113129614153327217}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &620167862598774022
@@ -287,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4041836076078520964}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CenterPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -320,7 +352,7 @@ GameObject:
   - component: {fileID: 3113129614153327217}
   - component: {fileID: 5787560544539996236}
   - component: {fileID: 5627033410235352715}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Night
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +424,7 @@ GameObject:
   - component: {fileID: 3607314869425277478}
   - component: {fileID: 780857134692434539}
   - component: {fileID: 676061996313851133}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,7 +500,7 @@ GameObject:
   - component: {fileID: 6119207032491667267}
   - component: {fileID: 5992517770412465033}
   - component: {fileID: 2095576629554436545}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -543,6 +575,14 @@ MonoBehaviour:
   _flipDeadZone: 0.2
   _hitStopTime: 0.05
   _enemyMaxHP: 10
+  _wanderIdleTime: 2
+  _wanderWalkTime: 2
+  _sarchInterval: 1
+  _wallCheckDistance: 0.3
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _wallCheckPoint: {fileID: 6535094169942738331}
   _normalRadius: 0.5
   _normalHeight: 1
 --- !u!114 &2095576629554436545

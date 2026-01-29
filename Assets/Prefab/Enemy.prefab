@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7305838137169002331}
   - component: {fileID: 9020584869608070785}
   - component: {fileID: 3040645459408873365}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ GameObject:
   - component: {fileID: 4342457325691152167}
   - component: {fileID: 6693589660717055025}
   - component: {fileID: 3434206674255867403}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,6 +158,14 @@ MonoBehaviour:
   _flipDeadZone: 0.2
   _hitStopTime: 0.05
   _enemyMaxHP: 5
+  _wanderIdleTime: 2
+  _wanderWalkTime: 2
+  _sarchInterval: 1
+  _wallCheckDistance: 0.3
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _wallCheckPoint: {fileID: 8549874450104688392}
   _normalRadius: 0.2
   _normalHeight: 0.6
 --- !u!114 &3434206674255867403
@@ -185,7 +193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9046995399901992701}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CenterPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -219,7 +227,7 @@ GameObject:
   - component: {fileID: 7040921517277400742}
   - component: {fileID: 3459728359436101993}
   - component: {fileID: 1831522663494074845}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +302,7 @@ GameObject:
   - component: {fileID: 7231142964203748141}
   - component: {fileID: 4349340573484058775}
   - component: {fileID: 299695024130919474}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DetectionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +370,7 @@ GameObject:
   - component: {fileID: 1994452934758072101}
   - component: {fileID: 6841027139406744774}
   - component: {fileID: 7583386646781577135}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -386,6 +394,7 @@ Transform:
   - {fileID: 9046995399901992701}
   - {fileID: 1876973912033498070}
   - {fileID: 8106551281940909076}
+  - {fileID: 8549874450104688392}
   m_Father: {fileID: 7305838137169002331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8761148323876083214
@@ -548,3 +557,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b63234fe897e742a89dce4cf0bb270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
+--- !u!1 &9107074814475321611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8549874450104688392}
+  m_Layer: 10
+  m_Name: Ray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8549874450104688392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9107074814475321611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.154, y: -0.071, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 549207291467347638}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

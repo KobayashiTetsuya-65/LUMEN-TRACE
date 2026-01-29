@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 913395725299041699}
   - component: {fileID: 2893522925215687887}
   - component: {fileID: 9107218085082490538}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 7327877866958511888}
   - component: {fileID: 2996827481416715415}
   - component: {fileID: 140379917077126971}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +113,7 @@ Transform:
   - {fileID: 1867254534504219310}
   - {fileID: 5744564749064432031}
   - {fileID: 4333906355581156934}
+  - {fileID: 6107904364079864331}
   m_Father: {fileID: 483250938764732893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &9175768984278825512
@@ -283,7 +284,7 @@ GameObject:
   - component: {fileID: 5931315434052379396}
   - component: {fileID: 3192233161325942308}
   - component: {fileID: 8435733034335207653}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -358,6 +359,14 @@ MonoBehaviour:
   _flipDeadZone: 0.2
   _hitStopTime: 0.05
   _enemyMaxHP: 3
+  _wanderIdleTime: 2
+  _wanderWalkTime: 2
+  _sarchInterval: 1
+  _wallCheckDistance: 0.3
+  _wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _wallCheckPoint: {fileID: 6107904364079864331}
   _normalRadius: 0.5
   _normalHeight: 1
 --- !u!114 &8435733034335207653
@@ -376,6 +385,37 @@ MonoBehaviour:
   _minBrightness: 0.2
   _maxBrightness: 1
   _decaySpeed: 1.8
+--- !u!1 &5281811063889069435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6107904364079864331}
+  m_Layer: 10
+  m_Name: Ray
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6107904364079864331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5281811063889069435}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.48, y: 0.17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2606498500699205264}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5474352927274736755
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +427,7 @@ GameObject:
   - component: {fileID: 483250938764732893}
   - component: {fileID: 1400817390077743847}
   - component: {fileID: 3640007006547348570}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Enemy_Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -456,7 +496,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1867254534504219310}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CenterPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +529,7 @@ GameObject:
   - component: {fileID: 6162938528959297724}
   - component: {fileID: 3051445278769845692}
   - component: {fileID: 4092224467393078725}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DetectionArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}

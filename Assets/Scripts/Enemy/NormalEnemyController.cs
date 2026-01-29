@@ -29,6 +29,16 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField, Tooltip("ヒットストップ時間")] private float _hitStopTime = 0.05f;
     [SerializeField, Tooltip("HP")] private int _enemyMaxHP = 5;
 
+    [Header("徘徊設定")]
+    [SerializeField, Tooltip("静止時間")] private float _wanderIdleTime = 2f;
+    [SerializeField, Tooltip("歩く時間")] private float _wanderWalkTime = 2f;
+    [SerializeField, Tooltip("見失うまでの時間")] private float _sarchInterval = 1.0f;
+
+    [Header("障害物検知")]
+    [SerializeField, Tooltip("障害物確認距離")] private float _wallCheckDistance = 0.3f;
+    [SerializeField, Tooltip("障害物レイヤー")] private LayerMask _wallLayer;
+    [SerializeField, Tooltip("飛ばし始める場所")] private Transform _wallCheckPoint;
+
     [Header("当たり判定調整")]
     [SerializeField, Tooltip("通常時の半径")] private float _normalRadius = 0.2f;
     [SerializeField, Tooltip("通常時の高さ")] private float _normalHeight = 0.6f;
@@ -37,10 +47,11 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     private EnemyLightSensor _lightSensor;
     private HitStopManager _hitStopManager;
     private PlayerController _playerController;
-    
-    private Coroutine _coroutine;
+
+    RaycastHit _hit;
+    private Vector3 _dir;
     private Transform _target;
-    private float _lastAttackTime;
+    private float _lastAttackTime, _wanderTimer = 0f;
     private int _currentHP;
     void Start()
     {
@@ -94,7 +105,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     {
         if(_target == null)
         {
-            _stateMachine.ChangeState(EnemyState.Idle);
+            Wander();
             return;
         }
 
@@ -128,6 +139,17 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
             return;
         }
 
+        // 壁チェック
+        if (IsWallAhead())
+        {
+            // 向きを反転
+            bool newDir = !_spriteAnimator.IsLeftFacing;
+            _spriteAnimator.ChangeSpriteFlipX(newDir);
+
+            // IdleにしてもOK
+            _stateMachine.ChangeState(EnemyState.Idle);
+            return;
+        }
         Vector3 move = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
         _rb.linearVelocity = _speed * move;
     }
@@ -183,6 +205,51 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         bool isLeft = _target.position.x < _tr.position.x;
         _spriteAnimator.ChangeSpriteFlipX(isLeft);
+    }
+
+    private bool IsWallAhead()
+    {
+        _dir = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
+
+        if (Physics.Raycast(_wallCheckPoint.position, _dir, out _hit, _wallCheckDistance, _wallLayer))
+            return true;
+
+        return false;
+    }
+
+    private void Wander()
+    {
+        _wanderTimer += Time.deltaTime;
+
+        if (_stateMachine.CurrentState == EnemyState.Idle)
+        {
+            if (_wanderTimer >= _wanderIdleTime)
+            {
+                _wanderTimer = 0f;
+                _wanderIdleTime = Random.Range(1f, 3f);
+                _wanderWalkTime = Random.Range(1f, 3f);
+
+                // 向きをランダムに
+                bool isLeft = Random.value > 0.5f;
+                _spriteAnimator.ChangeSpriteFlipX(isLeft);
+
+                _stateMachine.ChangeState(EnemyState.Walk);
+            }
+        }
+        else if (_stateMachine.CurrentState == EnemyState.Walk)
+        {
+            if (_wanderTimer >= _wanderWalkTime)
+            {
+                _wanderTimer = 0f;
+                _wanderIdleTime = Random.Range(1f, 3f);
+                _wanderWalkTime = Random.Range(1f, 3f);
+                _stateMachine.ChangeState(EnemyState.Idle);
+            }
+        }
+        else
+        {
+            _stateMachine.ChangeState(EnemyState.Idle);
+        }
     }
 
     public void FinishMovie()

@@ -294,13 +294,12 @@ public class PlayerController : LightSourceBase,IPlayer
 
     private IEnumerator DamageVignetteEffect()
     {
-        float target = _startIntensity + (_intensityIncrease * (_maxHP - _currentHP));
         float t = 0f;
 
         while (t < _damageDuration)
         {
             t += Time.deltaTime;
-            _vignette.intensity.value = Mathf.Lerp(_startIntensity, target, t / _damageDuration);
+            _vignette.intensity.value = Mathf.Lerp(_startIntensity, _startIntensity + (_intensityIncrease * 2), t / _damageDuration);
             yield return null;
         }
 
@@ -310,7 +309,7 @@ public class PlayerController : LightSourceBase,IPlayer
         while (t < _damageDuration)
         {
             t += Time.deltaTime;
-            _vignette.intensity.value = Mathf.Lerp(target, _startIntensity, t / _damageDuration);
+            _vignette.intensity.value = Mathf.Lerp(_startIntensity + (_intensityIncrease * 2), _startIntensity, t / _damageDuration);
             yield return null;
         }
     }

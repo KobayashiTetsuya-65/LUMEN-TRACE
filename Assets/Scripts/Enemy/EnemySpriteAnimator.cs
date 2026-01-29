@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 /// <summary>
 /// 敵のアニメーション制御
@@ -22,6 +23,7 @@ public class EnemySpriteAnimator : MonoBehaviour
     [SerializeField, Tooltip("歩行時の間隔")] private float _walkFrame = 0.06f;
     [SerializeField, Tooltip("攻撃時の間隔")] private float _attackFrame = 0.08f;
     [SerializeField, Tooltip("死亡時の間隔")] private float _deadFrame = 0.15f;
+    [SerializeField, Tooltip("ダメージエフェクト表示時間")] private float _damageDuration = 0.2f;
     [SerializeField, Tooltip("スケール")] private float _scale = 3f;
     [SerializeField, Tooltip("一回目の攻撃判定フレーム")] private int _firstAttackFrame = 4;
     [SerializeField, Tooltip("一回目の攻撃判定の持続フレーム数")] private int _sustainedFirstAttackFrame = 5;
@@ -78,7 +80,6 @@ public class EnemySpriteAnimator : MonoBehaviour
 
                     if(_index == _firstAttackFrame)
                     {
-                        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.EnemyAttack);
                         _controller.Attack(true);
                     }
                     else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame)
@@ -152,5 +153,16 @@ public class EnemySpriteAnimator : MonoBehaviour
     public void ResetAttack()
     {
         IsAttackFinished = false;
+    }
+
+    public IEnumerator DamageEffect()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            _sr.enabled = false;
+            yield return new WaitForSecondsRealtime(0.02f);
+            _sr.enabled = true;
+            yield return new WaitForSecondsRealtime(0.02f);
+        }
     }
 }

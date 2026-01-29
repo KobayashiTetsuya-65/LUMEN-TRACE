@@ -9,6 +9,7 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
 
     AudioManager _audioManager;
     Button _button;
+    private bool _isFirst = true;
     private void Awake()
     {
         _obj.SetActive(false);
@@ -29,6 +30,11 @@ public class SceneMoveButton : MonoBehaviour,ITitleSelectable
     {
         // 色変更・拡大・SE
         _obj.SetActive(true);
+        if (_isFirst)
+        {
+            _isFirst = false;
+            return;
+        }
         if(_audioManager == null) _audioManager = AudioManager.Instance;
         _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Select);
     }

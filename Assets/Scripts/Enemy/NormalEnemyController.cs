@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 /// <summary>
 /// 敵の行動制御
@@ -35,6 +36,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     private HitStopManager _hitStopManager;
     private PlayerController _playerController;
     
+    private Coroutine _coroutine;
     private Transform _target;
     private float _lastAttackTime;
     private int _currentHP;
@@ -129,17 +131,28 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     }
     public void Attack(bool isAppear)
     {
+        if(_playerController.IsDead) return;
+
         if (!isAppear)
         {
             EnemyAttackDetection enemyAttack = _attackCollider.GetComponent<EnemyAttackDetection>();
             enemyAttack.IsAttack = false;
         }
-        _attackCollider.SetActive(isAppear);
+        else
+        {
+            _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.EnemyAttack);
+        }
+            _attackCollider.SetActive(isAppear);
     }
     public void Damaged()
     {
+        //演出
+        //if (_coroutine != null)
+        //    StopCoroutine(_coroutine);
+        //_coroutine = StartCoroutine(_spriteAnimator.DamageEffect());
         _hitStopManager.RequestHitStop(_hitStopTime);
         _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
+
         _currentHP -= 1;
         if(_currentHP <= 0)
         {
@@ -150,6 +163,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         }
         Debug.Log("ダメージを与えた！");
     }
+
     public void Dead()
     {
         Debug.Log("倒した！！！");
@@ -160,7 +174,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     /// </summary>
     public void SearchPlayer()
     {
-        if (_target == null || !_playerController.IsDead) return;
+        if (_target == null) return;
 
         float diff = _target.position.x - _tr.position.x;
 

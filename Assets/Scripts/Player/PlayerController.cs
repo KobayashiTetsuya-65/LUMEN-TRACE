@@ -344,4 +344,11 @@ public class PlayerController : LightSourceBase,IPlayer
 
         GameManager.Instance.SceneMove(SceneName.Title);
     }
+
+    public void Recovery()
+    {
+        _currentHP = _maxHP;
+        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Recovery);
+        ChangeLightRadius(((_currentHP + _lightAdjustmentValue) / (_maxHP + _lightAdjustmentValue)) * _normalLightRadius);
+    }
 }

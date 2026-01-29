@@ -9,6 +9,8 @@ public class LightSourceGimmick : LightSourceBase,ILightAffectable,IInteractable
     [Header("ğŒ")]
     [SerializeField] private float _requiredLight = 0.8f;
 
+    PlayerController _playerController;
+
     private float _currentLight;
     private bool _canInteract = false,_isLit = false;
 
@@ -16,6 +18,7 @@ public class LightSourceGimmick : LightSourceBase,ILightAffectable,IInteractable
     {
         base.Awake();
         ChangeLightRadius(0); // Å‰‚ÍÁ“”
+        _playerController = FindAnyObjectByType<PlayerController>();
     }
 
     private void LateUpdate()
@@ -44,6 +47,7 @@ public class LightSourceGimmick : LightSourceBase,ILightAffectable,IInteractable
     {
         _isLit = true;
         ChangeLightRadius(_maxRadius);
+        _playerController.Recovery();
 
         // Œ©‚½–Ú‰‰o
         _particle.SetActive(true);

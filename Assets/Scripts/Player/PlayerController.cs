@@ -252,7 +252,7 @@ public class PlayerController : LightSourceBase,IPlayer
         }
         else
         {
-            _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
+            _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.PlayerDamage);
             _currentHP -= 1;
             
             if(_currentHP <= 0)

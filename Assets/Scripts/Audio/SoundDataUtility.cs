@@ -10,6 +10,7 @@ public static class SoundDataUtility
             public static readonly string EnemyAttack = "EnemyAttack";
             public static readonly string AttackHit = "AttackHit";
             public static readonly string Damage = "Damage";
+            public static readonly string PlayerDamage = "PlayerDamage";
             public static readonly string Dodge = "Dodge";
             public static readonly string Hide = "Hide";
             public static readonly string Select = "Select";

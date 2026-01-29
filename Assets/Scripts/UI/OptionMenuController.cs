@@ -10,14 +10,16 @@ public class OptionMenuController : MonoBehaviour
     [SerializeField] private GameObject _panel;
     [SerializeField] private float _changeAmount = 0.01f;
     [SerializeField] private float _sliderSizeMag = 1.2f;
-    private int _currentIndex = 0;
+    private int _currentIndex = 0,_index;
 
+    private AudioManager _audioManager;
     private PlayerInput _playerInput;
     private InputAction _upAction, _downAction, _leftAction, _rightAction, _submitAction;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _audioManager = AudioManager.Instance;
     }
 
     // Update is called once per frame
@@ -44,7 +46,9 @@ public class OptionMenuController : MonoBehaviour
     void ChangeIndex(int delta)
     {
         _sliders[_currentIndex].transform.localScale = Vector3.one * 5;
+        _index = _currentIndex;
         _currentIndex = Mathf.Clamp(_currentIndex + delta, 0, _sliders.Count - 1);
+        if (_index != _currentIndex) _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Select);
         _sliders[_currentIndex].transform.localScale = Vector3.one * _sliderSizeMag * 5;
     }
 
@@ -55,6 +59,7 @@ public class OptionMenuController : MonoBehaviour
 
     void Close()
     {
+        _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Submit);
         _playerInput.SwitchCurrentActionMap("Player");
         _panel.SetActive(false);
     }

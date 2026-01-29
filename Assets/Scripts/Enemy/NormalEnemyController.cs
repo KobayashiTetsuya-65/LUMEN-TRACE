@@ -17,6 +17,8 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField] private EnemySpriteAnimator _spriteAnimator;
     [SerializeField] private EnemyPlayerDetector _playerDetector;
     [SerializeField] private Rigidbody _rb;
+    [SerializeField] private GameObject _effect;
+    [SerializeField] private Transform _effectPos;
 
     [Header("êîílê›íË")]
     [SerializeField, Tooltip("à⁄ìÆë¨ìx")] private float _speed = 2.0f;
@@ -147,9 +149,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     public void Damaged()
     {
         //ââèo
-        //if (_coroutine != null)
-        //    StopCoroutine(_coroutine);
-        //_coroutine = StartCoroutine(_spriteAnimator.DamageEffect());
+        Instantiate(_effect, _effectPos.position + new Vector3(0f,0f,-1f), Quaternion.identity);
         _hitStopManager.RequestHitStop(_hitStopTime);
         _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Damage);
 

@@ -349,6 +349,8 @@ MonoBehaviour:
   _spriteAnimator: {fileID: 2996827481416715415}
   _playerDetector: {fileID: 4092224467393078725}
   _rb: {fileID: 7327877866958511888}
+  _effect: {fileID: 8850418845005096347, guid: aea169505c888604bad8256eca5400e5, type: 3}
+  _effectPos: {fileID: 1867254534504219310}
   _speed: 3
   _lightDetectionValue: 0.2
   _attackDetectionRange: 3
@@ -470,7 +472,7 @@ Transform:
   m_GameObject: {fileID: 6151646578744251802}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.36, y: -0.16, z: 0}
+  m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

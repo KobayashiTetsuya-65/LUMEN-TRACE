@@ -140,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef96d3a13bd3bc43a0b9cd506a042ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalEnemyController
+  IsMovie: 0
   _attackCollider: {fileID: 6041504335400318036}
   _centerPoint: {fileID: 9046995399901992701}
   _col: {fileID: 4342457325691152167}
@@ -148,6 +149,8 @@ MonoBehaviour:
   _spriteAnimator: {fileID: 6841027139406744774}
   _playerDetector: {fileID: 299695024130919474}
   _rb: {fileID: 1994452934758072101}
+  _effect: {fileID: 8850418845005096347, guid: aea169505c888604bad8256eca5400e5, type: 3}
+  _effectPos: {fileID: 9046995399901992701}
   _speed: 2
   _lightDetectionValue: 0.2
   _attackDetectionRange: 3
@@ -198,7 +201,7 @@ Transform:
   m_GameObject: {fileID: 4453835257522451983}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.36, y: -0.16, z: 0}
+  m_LocalPosition: {x: 0.36, y: -0.101, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -529,6 +532,7 @@ MonoBehaviour:
   _walkFrame: 0.06
   _attackFrame: 0.08
   _deadFrame: 0.08
+  _damageDuration: 0.2
   _scale: 3
   _firstAttackFrame: 3
   _sustainedFirstAttackFrame: 3

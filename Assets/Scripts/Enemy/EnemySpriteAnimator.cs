@@ -154,15 +154,4 @@ public class EnemySpriteAnimator : MonoBehaviour
     {
         IsAttackFinished = false;
     }
-
-    public IEnumerator DamageEffect()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            _sr.enabled = false;
-            yield return new WaitForSecondsRealtime(0.02f);
-            _sr.enabled = true;
-            yield return new WaitForSecondsRealtime(0.02f);
-        }
-    }
 }

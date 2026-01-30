@@ -558,6 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NormalEnemyController
   IsMovie: 0
+  MyEnemyType: 2
   _attackCollider: {fileID: 8019025364395842872}
   _centerPoint: {fileID: 4041836076078520964}
   _col: {fileID: 6119207032491667267}

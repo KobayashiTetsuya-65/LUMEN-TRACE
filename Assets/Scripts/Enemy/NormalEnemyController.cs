@@ -7,6 +7,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 {
     public bool IsDead { get; private set; } = false;
     public bool IsMovie = false;
+    public EnemyType MyEnemyType;
     public System.Action OnDead;
 
     [Header("éQè∆")]
@@ -45,6 +46,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     [SerializeField, Tooltip("í èÌéûÇÃçÇÇ≥")] private float _normalHeight = 0.6f;
 
     private AudioManager _audioManager;
+    private GameManager _gameManager;
     private EnemyLightSensor _lightSensor;
     private HitStopManager _hitStopManager;
     private PlayerController _playerController;
@@ -52,7 +54,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     RaycastHit _hit;
     private Vector3 _dir;
     private Transform _target;
-    private float _lastAttackTime, _wanderTimer = 0f;
+    private float _lastAttackTime, _wanderTimer = 0f, _chaseTimer = 0;
     private int _currentHP;
     void Start()
     {
@@ -60,6 +62,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         _lightSensor = GetComponent<EnemyLightSensor>();
         _hitStopManager = HitStopManager.Instance;
         _audioManager = AudioManager.Instance;
+        _gameManager = GameManager.Instance;
 
         _col.radius = _normalRadius;
         _col.height = _normalHeight;
@@ -77,6 +80,12 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         SearchPlayer();
 
         if(IsMovie) return;
+        if (_gameManager.IsMovie)
+        {
+            _stateMachine.ChangeState(EnemyState.Dead);
+            return;
+        }
+            
 
         if (_stateMachine.CurrentState == EnemyState.Attack)
         {
@@ -92,7 +101,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     }
     private void LateUpdate()
     {
-        
+
     }
     private void FixedUpdate()
     {
@@ -106,6 +115,16 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     {
         if(_target == null)
         {
+            Wander();
+            return;
+        }
+
+        _chaseTimer += Time.deltaTime;
+
+        if(_chaseTimer >= _sarchInterval)
+        {
+            _target = null;
+            _chaseTimer = 0f;
             Wander();
             return;
         }
@@ -145,9 +164,9 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         {
             // å¸Ç´ÇîΩì]
             bool newDir = !_spriteAnimator.IsLeftFacing;
+
             _spriteAnimator.ChangeSpriteFlipX(newDir);
 
-            // IdleÇ…ÇµÇƒÇ‡OK
             _stateMachine.ChangeState(EnemyState.Idle);
             return;
         }
@@ -197,6 +216,16 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     /// </summary>
     public void SearchPlayer()
     {
+        if (_target == null && _playerDetector.CurrentTarget != null)
+        {
+            _target = _playerDetector.CurrentTarget;
+            _chaseTimer = 0f;
+        }
+        else if (_playerDetector.CurrentTarget == null)
+        {
+            _target = null;
+        }
+
         if (_target == null) return;
 
         float diff = _target.position.x - _tr.position.x;
@@ -205,7 +234,11 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
             return;
 
         bool isLeft = _target.position.x < _tr.position.x;
-        _spriteAnimator.ChangeSpriteFlipX(isLeft);
+
+        if (isLeft != _spriteAnimator.IsLeftFacing)
+        {
+            _spriteAnimator.ChangeSpriteFlipX(isLeft);
+        }
     }
 
     private bool IsWallAhead()

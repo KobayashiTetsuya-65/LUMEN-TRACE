@@ -9408,15 +9408,15 @@ MonoBehaviour:
   _spawners:
   - SpawnPoint: {fileID: 1774853412}
     MaxEnemy: 1
-    SpawnInterval: 10
+    SpawnInterval: 8
     SpawnTable:
     - Type: 1
       Probability: 100
     _timer: 0
     _currentEnemy: 0
   - SpawnPoint: {fileID: 745409032}
-    MaxEnemy: 3
-    SpawnInterval: 5
+    MaxEnemy: 1
+    SpawnInterval: 8
     SpawnTable:
     - Type: 0
       Probability: 70
@@ -9425,8 +9425,8 @@ MonoBehaviour:
     _timer: 0
     _currentEnemy: 0
   - SpawnPoint: {fileID: 133141956}
-    MaxEnemy: 3
-    SpawnInterval: 4
+    MaxEnemy: 2
+    SpawnInterval: 8
     SpawnTable:
     - Type: 0
       Probability: 45
@@ -9438,7 +9438,7 @@ MonoBehaviour:
     _currentEnemy: 0
   - SpawnPoint: {fileID: 438435513}
     MaxEnemy: 2
-    SpawnInterval: 5
+    SpawnInterval: 10
     SpawnTable:
     - Type: 2
       Probability: 90
@@ -10908,10 +10908,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 329946548}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 645, y: -424}
-  m_SizeDelta: {x: 500, y: 300}
+  m_SizeDelta: {x: -1420, y: -780}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1643851666
 MonoBehaviour:

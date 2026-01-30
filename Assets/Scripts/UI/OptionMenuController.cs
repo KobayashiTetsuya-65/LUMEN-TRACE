@@ -45,11 +45,11 @@ public class OptionMenuController : MonoBehaviour
     }
     void ChangeIndex(int delta)
     {
-        _sliders[_currentIndex].transform.localScale = Vector3.one * 5;
+        _sliders[_currentIndex].transform.localScale = Vector3.one * 0.3f;
         _index = _currentIndex;
         _currentIndex = Mathf.Clamp(_currentIndex + delta, 0, _sliders.Count - 1);
         if (_index != _currentIndex) _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Select);
-        _sliders[_currentIndex].transform.localScale = Vector3.one * _sliderSizeMag * 5;
+        _sliders[_currentIndex].transform.localScale = Vector3.one * _sliderSizeMag;
     }
 
     void ChangeValue(float amount)

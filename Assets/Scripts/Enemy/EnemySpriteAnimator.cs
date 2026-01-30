@@ -80,11 +80,11 @@ public class EnemySpriteAnimator : MonoBehaviour
 
                     if(_index == _firstAttackFrame)
                     {
-                        _controller.Attack(true);
+                        _controller.Attack(true,_controller.MyEnemyType);
                     }
                     else if(_index == _firstAttackFrame + _sustainedFirstAttackFrame)
                     {
-                        _controller.Attack(false);
+                        _controller.Attack(false, _controller.MyEnemyType);
                     }
                 }
                 _index++;

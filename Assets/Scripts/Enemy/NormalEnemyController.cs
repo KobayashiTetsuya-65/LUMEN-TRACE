@@ -166,7 +166,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         Vector3 move = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
         _rb.linearVelocity = _speed * move;
     }
-    public void Attack(bool isAppear)
+    public void Attack(bool isAppear,EnemyType type)
     {
         if(_playerController.IsDead) return;
 
@@ -177,7 +177,19 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
         }
         else
         {
-            _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.EnemyAttack);
+            switch (type)
+            {
+                case EnemyType.Normal:
+                    _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.EnemyAttack);
+                    break;
+                case EnemyType.Wolf:
+                    _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.WolfEnemyAttack);
+                    break;
+                case EnemyType.Night:
+                    _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.NightEnemyAttack);
+                    break;
+            }
+
         }
             _attackCollider.SetActive(isAppear);
     }

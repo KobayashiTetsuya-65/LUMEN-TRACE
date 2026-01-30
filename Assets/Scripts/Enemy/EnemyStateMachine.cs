@@ -35,7 +35,7 @@ public class EnemyStateMachine : MonoBehaviour
         switch (state)
         {
             case EnemyState.Attack:
-                _controller.Attack(false); 
+                _controller.Attack(false, _controller.MyEnemyType); 
                 break;
         }
     }

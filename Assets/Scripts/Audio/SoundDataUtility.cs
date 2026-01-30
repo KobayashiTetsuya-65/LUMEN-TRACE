@@ -17,6 +17,8 @@ public static class SoundDataUtility
             public static readonly string Submit = "Submit";
             public static readonly string Recovery = "Recovery";
             public static readonly string Flower = "Flower";
+            public static readonly string NightEnemyAttack = "NightEnemyAttack";
+            public static readonly string WolfEnemyAttack = "WolfEnemyAttack";
         }
         public static class Bgm
         {

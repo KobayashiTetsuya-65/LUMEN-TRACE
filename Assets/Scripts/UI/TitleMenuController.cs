@@ -25,6 +25,7 @@ public class TitleMenuController : MonoBehaviour
     void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
+        _playerInput.SwitchCurrentActionMap("Player");
         _upAction = _playerInput.actions["UP"];
         _downAction = _playerInput.actions["Down"];
         _submitAction = _playerInput.actions["Submit"];

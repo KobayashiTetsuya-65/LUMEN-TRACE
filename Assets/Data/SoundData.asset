@@ -36,7 +36,7 @@ MonoBehaviour:
     _isLoop: 0
     _playOnAwake: 1
     _volume: 1
-    _clip: {fileID: 8300000, guid: 83e77ce8709d52045bdc774ff599042b, type: 3}
+    _clip: {fileID: 8300000, guid: a88153e28b5373a438c1ca7ce8658604, type: 3}
   - _key: AttackHit
     _type: 1
     _isLoop: 0
@@ -91,3 +91,15 @@ MonoBehaviour:
     _playOnAwake: 1
     _volume: 1
     _clip: {fileID: 8300000, guid: 7b8815f3ad59c924ba3618fb3915ce87, type: 3}
+  - _key: WolfEnemyAttack
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: 39e0f70e1b0c80840bce83ceb395a0d8, type: 3}
+  - _key: NightEnemyAttack
+    _type: 1
+    _isLoop: 0
+    _playOnAwake: 1
+    _volume: 1
+    _clip: {fileID: 8300000, guid: f4d4e0bcccd8cdd448b68c28ad08555c, type: 3}

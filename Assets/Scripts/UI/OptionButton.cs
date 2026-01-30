@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class OptionButton : MonoBehaviour,ITitleSelectable
 {
@@ -44,9 +45,15 @@ public class OptionButton : MonoBehaviour,ITitleSelectable
     {
         if (_audioManager == null) _audioManager = AudioManager.Instance;
         _audioManager.PlaySe(SoundDataUtility.KeyConfig.Se.Submit);
+
+        StartCoroutine(DelayRegister());
+    }
+    IEnumerator DelayRegister()
+    {
+        yield return null;
+        OptionDisplay();
         _playerInput.SwitchCurrentActionMap("Option");
         _optionMenuController.RegisterAction();
-        OptionDisplay();
     }
     private void OptionDisplay()
     {

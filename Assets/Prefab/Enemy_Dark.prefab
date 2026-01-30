@@ -102,8 +102,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 9046995399901992701}
+  m_Children: []
   m_Father: {fileID: 549207291467347638}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &4342457325691152167
@@ -155,7 +154,7 @@ MonoBehaviour:
   _effectPos: {fileID: 9046995399901992701}
   _speed: 3
   _lightDetectionValue: 0.2
-  _attackDetectionRange: 1
+  _attackDetectionRange: 1.5
   _attackCooldown: 2
   _flipDeadZone: 0.1
   _hitStopTime: 0.05
@@ -211,11 +210,11 @@ Transform:
   m_GameObject: {fileID: 4453835257522451983}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.067, y: 0.028, z: -0.082}
+  m_LocalPosition: {x: 0.067000076, y: 0.027999997, z: -0.081999466}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8106551281940909076}
+  m_Father: {fileID: 549207291467347638}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6041504335400318036
 GameObject:
@@ -395,6 +394,7 @@ Transform:
   - {fileID: 7231142964203748141}
   - {fileID: 1876973912033498070}
   - {fileID: 8106551281940909076}
+  - {fileID: 9046995399901992701}
   - {fileID: 8549874450104688392}
   m_Father: {fileID: 7305838137169002331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

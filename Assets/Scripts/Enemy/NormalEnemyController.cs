@@ -76,16 +76,19 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     {
         if (IsDead) return;
 
-        _target = _playerDetector.CurrentTarget;
         SearchPlayer();
 
-        if(IsMovie) return;
+        if (IsMovie) return;
+
+        UpdateFacing();
+
         if (_gameManager.IsMovie)
         {
             _stateMachine.ChangeState(EnemyState.Dead);
             return;
         }
-            
+
+
 
         if (_stateMachine.CurrentState == EnemyState.Attack)
         {
@@ -159,17 +162,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
             return;
         }
 
-        // 壁チェック
-        if (IsWallAhead())
-        {
-            // 向きを反転
-            bool newDir = !_spriteAnimator.IsLeftFacing;
-
-            _spriteAnimator.ChangeSpriteFlipX(newDir);
-
-            _stateMachine.ChangeState(EnemyState.Idle);
-            return;
-        }
+        
         Vector3 move = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
         _rb.linearVelocity = _speed * move;
     }
@@ -203,12 +196,10 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
             _rb.useGravity = false;
             _stateMachine.ChangeState(EnemyState.Dead);
         }
-        Debug.Log("ダメージを与えた！");
     }
 
     public void Dead()
     {
-        Debug.Log("倒した！！！");
         OnDead?.Invoke();
     }
     /// <summary>
@@ -232,23 +223,44 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 
         if (Mathf.Abs(diff) < _flipDeadZone)
             return;
-
-        bool isLeft = _target.position.x < _tr.position.x;
-
-        if (isLeft != _spriteAnimator.IsLeftFacing)
-        {
-            _spriteAnimator.ChangeSpriteFlipX(isLeft);
-        }
     }
 
+    /// <summary>
+    /// 向きを1か所で決定
+    /// </summary>
+    private void UpdateFacing()
+    {
+        if (_target != null)
+        {
+            float diff = _target.position.x - _tr.position.x;
+
+            if (Mathf.Abs(diff) < _flipDeadZone)
+                return;
+
+            bool isLeft = diff < 0;
+            SetFacing(isLeft);
+            return;
+        }
+
+        if (_stateMachine.CurrentState == EnemyState.Walk && IsWallAhead())
+        {
+            SetFacing(!_spriteAnimator.IsLeftFacing);
+        }
+    }
     private bool IsWallAhead()
     {
         _dir = _spriteAnimator.IsLeftFacing ? Vector3.left : Vector3.right;
 
-        if (Physics.Raycast(_wallCheckPoint.position, _dir, out _hit, _wallCheckDistance, _wallLayer))
-            return true;
+        return Physics.Raycast(_wallCheckPoint.position, _dir, _wallCheckDistance, _wallLayer);
+    }
+    /// <summary>
+    /// 向き変更の唯一の入口
+    /// </summary>
+    private void SetFacing(bool isLeft)
+    {
+        if (_spriteAnimator.IsLeftFacing == isLeft) return;
 
-        return false;
+        _spriteAnimator.ChangeSpriteFlipX(isLeft);
     }
 
     private void Wander()
@@ -262,10 +274,6 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
                 _wanderTimer = 0f;
                 _wanderIdleTime = Random.Range(1f, 3f);
                 _wanderWalkTime = Random.Range(1f, 3f);
-
-                // 向きをランダムに
-                bool isLeft = Random.value > 0.5f;
-                _spriteAnimator.ChangeSpriteFlipX(isLeft);
 
                 _stateMachine.ChangeState(EnemyState.Walk);
             }

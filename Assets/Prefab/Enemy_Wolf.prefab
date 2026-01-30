@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 3155236913866791413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -101.12, y: -0.63, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -355,7 +355,7 @@ MonoBehaviour:
   _effectPos: {fileID: 1867254534504219310}
   _speed: 3
   _lightDetectionValue: 0.2
-  _attackDetectionRange: 3
+  _attackDetectionRange: 2.5
   _attackCooldown: 2
   _flipDeadZone: 0.2
   _hitStopTime: 0.05

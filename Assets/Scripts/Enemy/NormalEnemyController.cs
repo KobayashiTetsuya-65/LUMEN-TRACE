@@ -7,6 +7,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
 {
     public bool IsDead { get; private set; } = false;
     public bool IsMovie = false;
+    public System.Action OnDead;
 
     [Header("参照")]
     [SerializeField, Tooltip("攻撃判定")] private GameObject _attackCollider;
@@ -189,7 +190,7 @@ public class NormalEnemyController : MonoBehaviour,IEnemy
     public void Dead()
     {
         Debug.Log("倒した！！！");
-        Destroy(_tr.gameObject);
+        OnDead?.Invoke();
     }
     /// <summary>
     /// プレイヤーを探索し、発見したらターゲットする

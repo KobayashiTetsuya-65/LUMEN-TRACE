@@ -22,9 +22,11 @@ public enum EnemyState
 /// <summary>
 /// “G‚Ìí—Ş
 /// </summary>
-public enum EnemyType
+public enum EnemyType : int
 {
     Normal,
+    Wolf,
+    Night,
 }
 /// <summary>
 /// ƒV[ƒ“‚Ì–¼‘O

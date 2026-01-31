@@ -9429,11 +9429,9 @@ MonoBehaviour:
     SpawnInterval: 8
     SpawnTable:
     - Type: 0
-      Probability: 45
+      Probability: 50
     - Type: 1
-      Probability: 45
-    - Type: 2
-      Probability: 10
+      Probability: 50
     _timer: 0
     _currentEnemy: 0
   - SpawnPoint: {fileID: 438435513}
@@ -9441,9 +9439,9 @@ MonoBehaviour:
     SpawnInterval: 10
     SpawnTable:
     - Type: 2
-      Probability: 90
+      Probability: 80
     - Type: 1
-      Probability: 10
+      Probability: 20
     _timer: 0
     _currentEnemy: 0
 --- !u!1001 &1473173199

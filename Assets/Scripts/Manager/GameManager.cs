@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour
             {
                 _audioManager.CreateAudioSource();
                 if (CurrentScene == SceneName.InGame) IsMovie = true;
-                _first = true;
+                else CurrentUIManager.FadePanel(false, SceneName.Title);
+                    _first = true;
             }
 
             if (IsMovie) return;

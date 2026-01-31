@@ -9,6 +9,7 @@ public class ClearPoint : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            AudioManager.Instance.StopBGM();
             _clearPoint.Play();
         }
     }
